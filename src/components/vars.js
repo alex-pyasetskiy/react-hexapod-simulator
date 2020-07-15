@@ -134,18 +134,11 @@ const PATHS = {
     },
 }
 
-const KOFI_LINK_PROPERTIES = {
-    name: "KOFI",
-    icon: ICON_COMPONENTS.mug,
-    description: "Buy Mithi Ko-Fi 🍵",
-    url: "https://ko-fi.com/minimithi",
-}
-
 const REPO_LINK_PROPERTIES = {
     name: "REPO",
     icon: ICON_COMPONENTS.octocat,
     description: "Source Code",
-    url: "https://github.com/mithi/hexapod",
+    url: "https://github.com/alex-pyasetskiy/react-hexapod-simulator",
 }
 
 const PATH_LINKS = [
@@ -156,18 +149,13 @@ const PATH_LINKS = [
     PATHS.landingPage,
 ]
 
-const URL_LINKS = [KOFI_LINK_PROPERTIES, REPO_LINK_PROPERTIES]
+const URL_LINKS = [REPO_LINK_PROPERTIES]
 
 /*************
  * LANDING PAGE
  *************/
 
-const LANDING_PAGE_MESSAGE = `
-
-# Mithi's Bare Minimum Hexapod Robot Simulator
-
-Enjoy your stay and share with your friends!
-`
+const LANDING_PAGE_MESSAGE = `# Hexapod Robot Simulator`
 
 export {
     ICON_COMPONENTS,
