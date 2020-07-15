@@ -1,5 +1,5 @@
 {
-    "name": "hexapod",
+    "name": "react-hexapod-sim",
     "version": "0.1.0",
     "private": true,
     "dependencies": {

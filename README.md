@@ -28,10 +28,6 @@
 
 ## Screenshots
 
-| ![leg patterns page portrait](./public/img/screenshot4.png) | ![inverse kinematics page with pose table](./public/img/screenshot5.png) |![forward kinematics page](./public/img/screenshot6.png) | ![walking gait page with footer nav](./public/img/screenshot3.png) |
-|------|-------|------|-------|
-| . | . | . | . |
-
 
 Based on https://github.com/mithi/hexapod
 <!-- 
