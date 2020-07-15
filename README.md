@@ -6,9 +6,10 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
 [![buy me coffee](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi) -->
 
-# Hexapod Robot Simulator 2
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
+# Hexapod Robot Simulator 2
+![GitHub](https://img.shields.io/github/license/alex-pyasetskiy/react-hexapod-simulator?color=1&logo=1&logoColor=1&style=for-the-badge)
+
 
 ### Control
 
