@@ -7,8 +7,8 @@
 [![buy me coffee](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi) -->
 
 
-# Hexapod Robot Simulator 2
-![GitHub](https://img.shields.io/github/license/alex-pyasetskiy/react-hexapod-simulator?color=1&logo=1&logoColor=1&style=for-the-badge)
+# Hexapod Robot Simulator 2 ![GitHub](https://img.shields.io/github/license/alex-pyasetskiy/react-hexapod-simulator) 
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/alex-pyasetskiy/react-hexapod-simulator/build/master?label=master&style=for-the-badge)
 
 
 ### Control
