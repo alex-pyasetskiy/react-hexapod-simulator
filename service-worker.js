@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/react-hexapod-simulator/precache-manifest.46c73752a259b30ac659e9c676343971.js"
+  "/react-hexapod-simulator/precache-manifest.f9caa85e7eae574cf96aa1f59693d63b.js"
 );
 
 self.addEventListener('message', (event) => {
