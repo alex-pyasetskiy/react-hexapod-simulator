@@ -7,7 +7,7 @@ import { VirtualHexapod } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS } from "../../templates"
 
-const ANIMATION_DELAY = 10
+const ANIMATION_DELAY = 500
 
 const getPose = (sequences, i) => {
     return Object.keys(sequences).reduce((newSequences, legPosition) => {
@@ -38,11 +38,13 @@ class WalkingGaitsPage extends Component {
     state = {
         gaitParams: DEFAULT_GAIT_PARAMS,
         isAnimating: false,
+        animationDelay: DEFAULT_GAIT_PARAMS.animationDelay,
         isTripodGait: true,
         isForward: true,
         inWalkMode: true,
         showGaitWidgets: true,
-        animationCount: 0,
+        animationCount: 1,
+        sequence: {},
     }
 
     componentDidMount = () => {
@@ -53,6 +55,52 @@ class WalkingGaitsPage extends Component {
 
     componentWillUnmount = () => {
         clearInterval(this.intervalID)
+    }
+
+    translate = (angle, reversed) => {
+        const minAngle = 0
+        const maxAngle = 120 //180
+        const minPulse = 800
+        const maxPulse = 2200
+
+        const new_diff = (maxPulse - minPulse)*(angle - minAngle) / (maxAngle - minAngle)
+        //console.log(new_diff)        
+        return reversed ? 1500 + new_diff : 1500 - new_diff
+    };
+    
+    // #1P1500 #2P1500 #3P1500 #5P1500 #6P1500 #7P1500 #9P1500 #10P1500 #11P1500 #21P1500 #22P1500 #23P1500 #25P1500 #26P1500 #27P1500 #30P1500 #31P1500 #32P1500 T500D500
+    toServo = ({ rightMiddle, rightFront, leftFront, leftMiddle, leftBack, rightBack}) => {
+        
+        const servos = {
+            1: this.translate(leftFront.alpha, false),
+            2: this.translate(leftFront.beta, false),
+            3: this.translate(leftFront.gamma, false),
+            5: this.translate(leftMiddle.alpha, false),
+            6: this.translate(leftMiddle.beta, false),
+            7: this.translate(leftMiddle.gamma, false),
+            9: this.translate(leftBack.alpha, false),
+            10: this.translate(leftBack.beta, false),
+            11: this.translate(leftBack.gamma, false),
+
+            21: this.translate(rightBack.alpha, true),
+            22: this.translate(rightBack.beta, true),
+            23: this.translate(rightBack.gamma, true),
+            25: this.translate(rightMiddle.alpha, false),
+            26: this.translate(rightMiddle.beta, true),
+            27: this.translate(rightMiddle.gamma, true),
+            30: this.translate(rightFront.alpha, false),
+            31: this.translate(rightFront.beta, true),
+            32: this.translate(rightFront.gamma, false)
+        };
+        let res = ''
+
+        for (const [key, value] of Object.entries(servos)) {
+            // this.state.sequence[key] && this.state.sequence[key] < value ? this.setState({sequence: {key :value}}) : 
+            res += '#' + key + 'P' + value.toFixed()
+          }
+        res += 'T200\n'
+        // if (this.state.isAnimating){this.setState({'sequence': this.state.sequence + res})}
+        return res
     }
 
     animate = () => {
@@ -66,6 +114,7 @@ class WalkingGaitsPage extends Component {
         const step = Math.max(0, Math.min(stepCount - 1, tempStep))
 
         const pose = getPose(this.walkSequence, step)
+        console.log(this.toServo(pose))
 
         if (inWalkMode) {
             this.onUpdate(pose, this.currentTwist)
@@ -82,10 +131,8 @@ class WalkingGaitsPage extends Component {
 
     onUpdate = (pose, currentTwist) => {
         this.currentTwist = currentTwist
-
         const { dimensions } = this.props.params
         const hexapod = new VirtualHexapod(dimensions, pose, { wontRotate: true })
-
         // ❗❗️HACK When we've passed undefined pose values for some reason
         if (!hexapod || !hexapod.body) {
             return

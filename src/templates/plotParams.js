@@ -95,7 +95,7 @@ const DATA = [
     {
         line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
         name: "rightFrontLeg",
-        showlegend: false,
+        showlegend: true,
         type: "scatter3d",
         x: [100.0, 170.71067811865476, 241.4213562373095, 241.4213562373095],
         y: [100.0, 170.71067811865476, 241.42135623730948, 241.42135623730948],
@@ -237,7 +237,7 @@ const CAMERA_VIEW = {
     },
     eye: {
         x: 0.010119765679525836,
-        y: 0.573601223004958,
+        y: -0.573601223004958,
         z: 0.04247372257492105,
     },
     up: {

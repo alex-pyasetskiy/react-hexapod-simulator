@@ -1,12 +1,12 @@
 import getWalkSequence from "../hexapod/solvers/walkSequenceSolver"
 
 const DEFAULT_DIMENSIONS = {
-    front: 100,
-    side: 100,
-    middle: 100,
-    coxia: 100,
-    femur: 100,
-    tibia: 100,
+    front: 110,
+    side: 160,
+    middle: 160,
+    coxia: 35,
+    femur: 85,
+    tibia: 120,
 }
 
 const POSITION_NAMES_LIST = [

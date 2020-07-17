@@ -1,7 +1,7 @@
 const DEFAULT_BODY_DIMENSIONS = {
-    front: 110,
-    side: 160,
-    middle: 160,
+    front: 65,
+    side: 80,
+    middle: 80,
 }
 const DEFAULT_LEG_DIMENSIONS = {
     coxia: 35,
@@ -10,9 +10,9 @@ const DEFAULT_LEG_DIMENSIONS = {
 }
 
 const DEFAULT_DIMENSIONS = {
-    front: 110,
-    side: 160,
-    middle: 160,
+    front: 65,
+    side: 80,
+    middle: 80,
     coxia: 35,
     femur: 85,
     tibia: 120,
@@ -59,5 +59,5 @@ export {
     DEFAULT_POSE,
     DEFAULT_IK_PARAMS,
     DEFAULT_PATTERN_PARAMS,
-    DEFAULT_GAIT_PARAMS,
+    DEFAULT_GAIT_PARAMS
 }
