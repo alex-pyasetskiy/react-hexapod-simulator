@@ -8,6 +8,7 @@
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
         "acorn": "^7.3.1",
+        "body-parser": "^1.19.0",
         "dotenv": "^8.2.0",
         "jest-canvas-mock": "^2.2.0",
         "plotly.js": "^1.54.6",
@@ -19,6 +20,7 @@
         "react-plotly.js": "^2.4.0",
         "react-router-dom": "^5.2.0",
         "react-scripts": "3.4.1",
+        "serialport": "^9.0.0",
         "source-map-explorer": "^2.4.2",
         "typescript": "^3.9.6"
     },
@@ -26,7 +28,7 @@
         "analyze": "source-map-explorer 'build/static/js/*.js'",
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test",
+        "api": "node src/server.js nodeamon",
         "eject": "react-scripts eject",
         "deploy": "gh-pages -d build"
     },

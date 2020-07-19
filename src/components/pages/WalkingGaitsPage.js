@@ -57,40 +57,41 @@ class WalkingGaitsPage extends Component {
         clearInterval(this.intervalID)
     }
 
-    translate = (angle, reversed) => {
-        const minAngle = 0
-        const maxAngle = 120 //180
-        const minPulse = 800
-        const maxPulse = 2200
-
-        const new_diff = (maxPulse - minPulse)*(angle - minAngle) / (maxAngle - minAngle)
-        //console.log(new_diff)        
-        return reversed ? 1500 + new_diff : 1500 - new_diff
+    translate = (angle, base, reversed) => {
+        const minAngle = -60
+        const maxAngle = 60 //180
+        // const minPulse = 800
+        // const maxPulse = 2200
+        const minPulse = 500
+        const maxPulse = 2500
+        const scale = (maxPulse - minPulse)/(maxAngle - minAngle)
+        const new_diff = scale * angle
+        if (angle === 0) {
+            return base
+        }
+        // //console.log(new_diff)        
+        // return reversed ? 1500 + new_diff : 1500 - new_diff
+        // const p = (minPulse  + (minPulse - maxPulse)  * angle / 180);
+        // return reversed ? 1500 + p : 1500 - p
+        return reversed ? base - new_diff : base + new_diff
     };
     
+
     // #1P1500 #2P1500 #3P1500 #5P1500 #6P1500 #7P1500 #9P1500 #10P1500 #11P1500 #21P1500 #22P1500 #23P1500 #25P1500 #26P1500 #27P1500 #30P1500 #31P1500 #32P1500 T500D500
     toServo = ({ rightMiddle, rightFront, leftFront, leftMiddle, leftBack, rightBack}) => {
         
         const servos = {
-            1: this.translate(leftFront.alpha, false),
-            2: this.translate(leftFront.beta, false),
-            3: this.translate(leftFront.gamma, false),
-            5: this.translate(leftMiddle.alpha, false),
-            6: this.translate(leftMiddle.beta, false),
-            7: this.translate(leftMiddle.gamma, false),
-            9: this.translate(leftBack.alpha, false),
-            10: this.translate(leftBack.beta, false),
-            11: this.translate(leftBack.gamma, false),
+            30: this.translate(leftFront.alpha, 1500, false),     1: this.translate(rightFront.alpha, 1500, true),
+            31: this.translate(leftFront.beta, 2000, true),     2: this.translate(rightFront.beta, 1000, false),
+            32: this.translate(leftFront.gamma, 1500, false),    3: this.translate(rightFront.gamma, 2000, false),
 
-            21: this.translate(rightBack.alpha, true),
-            22: this.translate(rightBack.beta, true),
-            23: this.translate(rightBack.gamma, true),
-            25: this.translate(rightMiddle.alpha, false),
-            26: this.translate(rightMiddle.beta, true),
-            27: this.translate(rightMiddle.gamma, true),
-            30: this.translate(rightFront.alpha, false),
-            31: this.translate(rightFront.beta, true),
-            32: this.translate(rightFront.gamma, false)
+            21: this.translate(leftMiddle.alpha, 1500, false),    5: this.translate(rightBack.alpha, 1500, false),
+            22: this.translate(leftMiddle.beta, 2000, true),    6: this.translate(rightBack.beta, 1000, false),
+            23: this.translate(leftMiddle.gamma, 1500, false),   7: this.translate(rightBack.gamma, 2000, false),
+
+            25: this.translate(leftBack.alpha, 1500, false),      9: this.translate(rightMiddle.alpha, 1500, false),
+            26: this.translate(leftBack.beta, 2000, true),     10: this.translate(rightMiddle.beta, 1000, false),
+            27: this.translate(leftBack.gamma, 1500, false),    11: this.translate(rightMiddle.gamma, 2000, false)
         };
         let res = ''
 
@@ -98,7 +99,7 @@ class WalkingGaitsPage extends Component {
             // this.state.sequence[key] && this.state.sequence[key] < value ? this.setState({sequence: {key :value}}) : 
             res += '#' + key + 'P' + value.toFixed()
           }
-        res += 'T200\n'
+        res += 'T300\r\n'
         // if (this.state.isAnimating){this.setState({'sequence': this.state.sequence + res})}
         return res
     }
@@ -114,6 +115,7 @@ class WalkingGaitsPage extends Component {
         const step = Math.max(0, Math.min(stepCount - 1, tempStep))
 
         const pose = getPose(this.walkSequence, step)
+
         console.log(this.toServo(pose))
 
         if (inWalkMode) {
@@ -133,6 +135,7 @@ class WalkingGaitsPage extends Component {
         this.currentTwist = currentTwist
         const { dimensions } = this.props.params
         const hexapod = new VirtualHexapod(dimensions, pose, { wontRotate: true })
+        // console.log(hexapod)
         // ❗❗️HACK When we've passed undefined pose values for some reason
         if (!hexapod || !hexapod.body) {
             return

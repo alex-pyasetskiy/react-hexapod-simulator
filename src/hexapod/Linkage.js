@@ -18,11 +18,11 @@
 
              2           1       * legId - legName     - localXaxisAngle
               \   head  /        *  0    - rightMiddle - 0
-               *---*---*         *  1    - rightFront  - 45
-              /    |    \        *  2    - leftFront   - 135
+               *---*---*         *  1    - rightFront  - 55
+              /    |    \        *  2    - leftFront   - 145
              /     |     \       *  3    - leftMiddle  - 180
-         3 -*-----cog-----*- 0   *  4    - leftBack    - 225
-             \     |     /       *  5    - rightBack   - 315
+         3 -*-----cog-----*- 0   *  4    - leftBack    - 235
+             \     |     /       *  5    - rightBack   - 325
               \    |    /
                *---*---*          ^ hexapodY
               /         \         |

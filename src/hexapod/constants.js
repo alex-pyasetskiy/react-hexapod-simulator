@@ -61,20 +61,20 @@ const MAX_ANGLES = {
  */
 const POSITION_NAME_TO_AXIS_ANGLE_MAP = {
     rightMiddle: 0,
-    rightFront: 45,
-    leftFront: 135,
+    rightFront: 55,
+    leftFront: 145,
     leftMiddle: 180,
     leftBack: 225,
-    rightBack: 315,
+    rightBack: 325,
 }
 
 const POSITION_NAME_TO_IS_LEFT_MAP = {
     rightMiddle: false,
     rightFront: false,
+    rightBack: false,
     leftFront: true,
     leftMiddle: true,
-    leftBack: true,
-    rightBack: false,
+    leftBack: true
 }
 
 const NUMBER_OF_LEGS = 6
