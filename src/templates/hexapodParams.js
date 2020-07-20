@@ -33,7 +33,7 @@ const DEFAULT_SERVO_POSE_VALUE = {
     leftBack: { alpha: 1300, beta: 1100, gamma: 1600 },
 
     rightFront: { alpha: 1300, beta: 1900, gamma: 1400 },
-    rightMiddle: { alpha: 1300, beta: 1900, gamma: 1400 },
+    rightMiddle: { alpha: 1500, beta: 1900, gamma: 1400 },
     rightBack: { alpha: 1300, beta: 1900, gamma: 1400 }
 }
 
