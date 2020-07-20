@@ -5,7 +5,7 @@ import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import PoseTable from "./PoseTable"
 import { VirtualHexapod } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
-import { DEFAULT_GAIT_PARAMS } from "../../templates"
+import { DEFAULT_GAIT_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 
 const ANIMATION_DELAY = 500
 
@@ -58,10 +58,8 @@ class WalkingGaitsPage extends Component {
     }
 
     translate = (angle, base, reversed) => {
-        const minAngle = -60
-        const maxAngle = 60 //180
-        // const minPulse = 800
-        // const maxPulse = 2200
+        const minAngle = -90
+        const maxAngle = 90 
         const minPulse = 500
         const maxPulse = 2500
         const scale = (maxPulse - minPulse)/(maxAngle - minAngle)
@@ -69,38 +67,43 @@ class WalkingGaitsPage extends Component {
         if (angle === 0) {
             return base
         }
-        // //console.log(new_diff)        
-        // return reversed ? 1500 + new_diff : 1500 - new_diff
-        // const p = (minPulse  + (minPulse - maxPulse)  * angle / 180);
-        // return reversed ? 1500 + p : 1500 - p
         return reversed ? base - new_diff : base + new_diff
     };
     
 
-    // #1P1500 #2P1500 #3P1500 #5P1500 #6P1500 #7P1500 #9P1500 #10P1500 #11P1500 #21P1500 #22P1500 #23P1500 #25P1500 #26P1500 #27P1500 #30P1500 #31P1500 #32P1500 T500D500
     toServo = ({ rightMiddle, rightFront, leftFront, leftMiddle, leftBack, rightBack}) => {
-        
         const servos = {
-            30: this.translate(leftFront.alpha, 1500, false),     1: this.translate(rightFront.alpha, 1500, true),
-            31: this.translate(leftFront.beta, 2000, true),     2: this.translate(rightFront.beta, 1000, false),
-            32: this.translate(leftFront.gamma, 1500, false),    3: this.translate(rightFront.gamma, 2000, false),
 
-            21: this.translate(leftMiddle.alpha, 1500, false),    5: this.translate(rightBack.alpha, 1500, false),
-            22: this.translate(leftMiddle.beta, 2000, true),    6: this.translate(rightBack.beta, 1000, false),
-            23: this.translate(leftMiddle.gamma, 1500, false),   7: this.translate(rightBack.gamma, 2000, false),
+            1: this.translate(leftFront.alpha, DEFAULT_SERVO_POSE_VALUE.leftFront.alpha, true),    
+            2: this.translate(leftFront.beta, DEFAULT_SERVO_POSE_VALUE.leftFront.beta, false),    
+            3: this.translate(leftFront.gamma, DEFAULT_SERVO_POSE_VALUE.leftFront.gamma, false), 
 
-            25: this.translate(leftBack.alpha, 1500, false),      9: this.translate(rightMiddle.alpha, 1500, false),
-            26: this.translate(leftBack.beta, 2000, true),     10: this.translate(rightMiddle.beta, 1000, false),
-            27: this.translate(leftBack.gamma, 1500, false),    11: this.translate(rightMiddle.gamma, 2000, false)
+            5: this.translate(leftMiddle.alpha, DEFAULT_SERVO_POSE_VALUE.leftMiddle.alpha, false),    
+            6: this.translate(leftMiddle.beta, DEFAULT_SERVO_POSE_VALUE.leftMiddle.beta, false),    
+            7: this.translate(leftMiddle.gamma, DEFAULT_SERVO_POSE_VALUE.leftMiddle.gamma, false),   
+
+            9: this.translate(leftBack.alpha, DEFAULT_SERVO_POSE_VALUE.leftBack.alpha, false),
+            10: this.translate(leftBack.beta, DEFAULT_SERVO_POSE_VALUE.leftBack.beta, false),
+            11: this.translate(leftBack.gamma, DEFAULT_SERVO_POSE_VALUE.leftBack.gamma, false),
+
+            21: this.translate(rightBack.alpha, DEFAULT_SERVO_POSE_VALUE.rightBack.alpha, true),
+            22: this.translate(rightBack.beta, DEFAULT_SERVO_POSE_VALUE.rightBack.beta, true),
+            23: this.translate(rightBack.gamma, DEFAULT_SERVO_POSE_VALUE.rightBack.gamma, false),
+
+            25: this.translate(rightMiddle.alpha, DEFAULT_SERVO_POSE_VALUE.rightMiddle.alpha, true),      
+            26: this.translate(rightMiddle.beta, DEFAULT_SERVO_POSE_VALUE.rightMiddle.beta, true),    
+            27: this.translate(rightMiddle.gamma, DEFAULT_SERVO_POSE_VALUE.rightMiddle.gamma, false), 
+
+            30: this.translate(rightFront.alpha,  DEFAULT_SERVO_POSE_VALUE.rightFront.alpha, true),
+            31: this.translate(rightFront.beta,  DEFAULT_SERVO_POSE_VALUE.rightFront.beta, true),
+            32: this.translate(rightFront.gamma,  DEFAULT_SERVO_POSE_VALUE.rightFront.gamma, false)
         };
         let res = ''
 
         for (const [key, value] of Object.entries(servos)) {
-            // this.state.sequence[key] && this.state.sequence[key] < value ? this.setState({sequence: {key :value}}) : 
             res += '#' + key + 'P' + value.toFixed()
           }
-        res += 'T300\r\n'
-        // if (this.state.isAnimating){this.setState({'sequence': this.state.sequence + res})}
+        res += 'T100'
         return res
     }
 
@@ -115,6 +118,10 @@ class WalkingGaitsPage extends Component {
         const step = Math.max(0, Math.min(stepCount - 1, tempStep))
 
         const pose = getPose(this.walkSequence, step)
+
+        // fetch('http://localhost:4000/', {method: 'POST', mode: 'no-cors',  headers: {
+        //     "Content-Type": "application/json"
+        //   }, body: JSON.stringify({cmd: this.toServo(pose)})}).then(res=>console.log(res.json))
 
         console.log(this.toServo(pose))
 

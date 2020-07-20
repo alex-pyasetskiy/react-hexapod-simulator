@@ -70,10 +70,11 @@ class ForwardKinematicsPage extends Component {
             ...pose,
             [name]: { ...pose[name], [angle]: value },
         }
+        
         fetch('http://localhost:4000/', {method: 'POST', mode: 'no-cors',  headers: {
             "Content-Type": "application/json"
           }, body: JSON.stringify({cmd: this.toServo(newPose)})}).then(res=>console.log(res.json))
-        // fetch(`http://localhost:4000/${this.toServo(newPose)}`, {mode: 'no-cors'}).then(res=>console.log(res))
+        
         console.log(this.toServo(newPose))      
 
         this.props.onUpdate(newPose)

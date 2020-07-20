@@ -12,7 +12,7 @@ app.use(bodyParser.text());
 var port = 4000;
 
 
-var controller = new SerialPort("/dev/cu.usbmodem5CFA575831321", {  
+var controller = new SerialPort("/dev/tty.usbserial-143240", {  
     baudRate: 115200,
     dataBits: 8,
     stopBits: 1

@@ -28,13 +28,13 @@ const DEFAULT_POSE = {
 }
 
 const DEFAULT_SERVO_POSE_VALUE = {
-    leftFront: { alpha: 1300, beta: 1100, gamma: 1600 },
-    leftMiddle: { alpha: 1500, beta: 1100, gamma: 1600 },
-    leftBack: { alpha: 1300, beta: 1100, gamma: 1600 },
+    leftFront: { alpha: 1500, beta: 1100, gamma: 1400 },
+    leftMiddle: { alpha: 1500, beta: 1100, gamma: 1400 },
+    leftBack: { alpha: 1500, beta: 1100, gamma: 1500 },
 
-    rightFront: { alpha: 1300, beta: 1900, gamma: 1400 },
+    rightFront: { alpha: 1500, beta: 1900, gamma: 1400 },
     rightMiddle: { alpha: 1500, beta: 1900, gamma: 1400 },
-    rightBack: { alpha: 1300, beta: 1900, gamma: 1400 }
+    rightBack: { alpha: 1500, beta: 1900, gamma: 1400 }
 }
 
 const SERVO_LINK_PINS = {
@@ -62,7 +62,7 @@ const DEFAULT_IK_PARAMS = {
 
 const DEFAULT_GAIT_PARAMS = {
     tx: 0,
-    tz: 0,
+    tz: 0.25,
     rx: 0,
     ry: 0,
     legStance: 0,
