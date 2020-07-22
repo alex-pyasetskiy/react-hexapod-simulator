@@ -59,7 +59,7 @@ class WalkingGaitsPage extends Component {
 
     translate = (angle, base, reversed) => {
         const minAngle = -90
-        const maxAngle = 90 
+        const maxAngle = 90
         const minPulse = 500
         const maxPulse = 2500
         const scale = (maxPulse - minPulse)/(maxAngle - minAngle)
@@ -67,6 +67,7 @@ class WalkingGaitsPage extends Component {
         if (angle === 0) {
             return base
         }
+        // console.log(new_diff)
         return reversed ? base - new_diff : base + new_diff
     };
     
@@ -79,10 +80,10 @@ class WalkingGaitsPage extends Component {
             3: this.translate(leftFront.gamma, DEFAULT_SERVO_POSE_VALUE.leftFront.gamma, false), 
 
             5: this.translate(leftMiddle.alpha, DEFAULT_SERVO_POSE_VALUE.leftMiddle.alpha, false),    
-            6: this.translate(leftMiddle.beta, DEFAULT_SERVO_POSE_VALUE.leftMiddle.beta, false),    
+            6: this.translate(leftMiddle.beta, DEFAULT_SERVO_POSE_VALUE.leftMiddle.beta, true),    
             7: this.translate(leftMiddle.gamma, DEFAULT_SERVO_POSE_VALUE.leftMiddle.gamma, false),   
 
-            9: this.translate(leftBack.alpha, DEFAULT_SERVO_POSE_VALUE.leftBack.alpha, false),
+            9: this.translate(leftBack.alpha, DEFAULT_SERVO_POSE_VALUE.leftBack.alpha, true),
             10: this.translate(leftBack.beta, DEFAULT_SERVO_POSE_VALUE.leftBack.beta, false),
             11: this.translate(leftBack.gamma, DEFAULT_SERVO_POSE_VALUE.leftBack.gamma, false),
 
@@ -98,12 +99,12 @@ class WalkingGaitsPage extends Component {
             31: this.translate(rightFront.beta,  DEFAULT_SERVO_POSE_VALUE.rightFront.beta, true),
             32: this.translate(rightFront.gamma,  DEFAULT_SERVO_POSE_VALUE.rightFront.gamma, false)
         };
-        let res = ''
-
+        let res = []
         for (const [key, value] of Object.entries(servos)) {
-            res += '#' + key + 'P' + value.toFixed()
+            // res.push(`%c#${key}P${value.toFixed()}%s`);
+            value.toFixed() < 2000 ? res.push(`\x1b[32m#${key}P${value.toFixed()}\x1b[0m`) : res.push(`\x1b[31m#${key}P${value.toFixed()}\x1b[0m`);
           }
-        res += 'T100'
+        res.push('T100')
         return res
     }
 
@@ -164,6 +165,8 @@ class WalkingGaitsPage extends Component {
             this.walkSequence
 
         const pose = getPose(this.walkSequence, animationCount)
+        const data = this.toServo(pose)
+        console.log(data.join(""))
         this.onUpdate(pose, this.currentTwist)
         this.setState({ gaitParams, isTripodGait, inWalkMode })
     }
