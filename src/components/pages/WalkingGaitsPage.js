@@ -80,15 +80,15 @@ class WalkingGaitsPage extends Component {
             3: this.translate(leftFront.gamma, DEFAULT_SERVO_POSE_VALUE.leftFront.gamma, false), 
 
             5: this.translate(leftMiddle.alpha, DEFAULT_SERVO_POSE_VALUE.leftMiddle.alpha, false),    
-            6: this.translate(leftMiddle.beta, DEFAULT_SERVO_POSE_VALUE.leftMiddle.beta, true),    
+            6: this.translate(leftMiddle.beta, DEFAULT_SERVO_POSE_VALUE.leftMiddle.beta, false),    
             7: this.translate(leftMiddle.gamma, DEFAULT_SERVO_POSE_VALUE.leftMiddle.gamma, false),   
 
             9: this.translate(leftBack.alpha, DEFAULT_SERVO_POSE_VALUE.leftBack.alpha, true),
-            10: this.translate(leftBack.beta, DEFAULT_SERVO_POSE_VALUE.leftBack.beta, false),
+            10: this.translate(leftBack.beta, DEFAULT_SERVO_POSE_VALUE.leftBack.beta, true),
             11: this.translate(leftBack.gamma, DEFAULT_SERVO_POSE_VALUE.leftBack.gamma, false),
 
             21: this.translate(rightBack.alpha, DEFAULT_SERVO_POSE_VALUE.rightBack.alpha, true),
-            22: this.translate(rightBack.beta, DEFAULT_SERVO_POSE_VALUE.rightBack.beta, true),
+            22: this.translate(rightBack.beta, DEFAULT_SERVO_POSE_VALUE.rightBack.beta, false),
             23: this.translate(rightBack.gamma, DEFAULT_SERVO_POSE_VALUE.rightBack.gamma, false),
 
             25: this.translate(rightMiddle.alpha, DEFAULT_SERVO_POSE_VALUE.rightMiddle.alpha, true),      
@@ -102,7 +102,7 @@ class WalkingGaitsPage extends Component {
         let res = []
         for (const [key, value] of Object.entries(servos)) {
             // res.push(`%c#${key}P${value.toFixed()}%s`);
-            value.toFixed() < 2000 ? res.push(`\x1b[32m#${key}P${value.toFixed()}\x1b[0m`) : res.push(`\x1b[31m#${key}P${value.toFixed()}\x1b[0m`);
+            value.toFixed() > 2000 || value.toFixed() < 1100 ? res.push(`\x1b[31m#${key}P${value.toFixed()}\x1b[0m`) : res.push(`\x1b[32m#${key}P${value.toFixed()}\x1b[0m`);
           }
         res.push('T100')
         return res
@@ -124,7 +124,7 @@ class WalkingGaitsPage extends Component {
         //     "Content-Type": "application/json"
         //   }, body: JSON.stringify({cmd: this.toServo(pose)})}).then(res=>console.log(res.json))
 
-        console.log(this.toServo(pose))
+        console.log(this.toServo(pose).join(""))
 
         if (inWalkMode) {
             this.onUpdate(pose, this.currentTwist)
