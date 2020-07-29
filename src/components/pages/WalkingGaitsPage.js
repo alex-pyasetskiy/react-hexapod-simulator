@@ -7,7 +7,10 @@ import { VirtualHexapod } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 
-const ANIMATION_DELAY = 500
+
+const SOCKET_URL = 'ws://127.0.0.1:4000'
+
+const ANIMATION_DELAY = 200
 
 const getPose = (sequences, i) => {
     return Object.keys(sequences).reduce((newSequences, legPosition) => {
@@ -31,6 +34,8 @@ const switches = (switch1, switch2, switch3) => (
 
 const countSteps = sequence => sequence["leftMiddle"].alpha.length
 
+const ws = new WebSocket(SOCKET_URL)
+
 class WalkingGaitsPage extends Component {
     pageName = SECTION_NAMES.walkingGaits
     currentTwist = 0
@@ -51,6 +56,24 @@ class WalkingGaitsPage extends Component {
         this.props.onMount(this.pageName)
         const { isTripodGait, inWalkMode } = this.state
         this.setWalkSequence(DEFAULT_GAIT_PARAMS, isTripodGait, inWalkMode)
+
+        ws.onopen = () => {
+            // on connecting, do nothing but log it to the console
+            console.log('connected')
+        }
+
+        ws.onmessage = evt => {
+            // on receiving a message, add it to the list of messages
+            // const message = JSON.parse(evt.data)
+        }
+
+        ws.onclose = () => {
+            console.log('disconnected')
+            // automatically try to reconnect on connection loss
+            this.setState({
+                ws: new WebSocket(SOCKET_URL),
+            })
+        }
     }
 
     componentWillUnmount = () => {
@@ -67,43 +90,47 @@ class WalkingGaitsPage extends Component {
         if (angle === 0) {
             return base
         }
-        // console.log(new_diff)
-        return reversed ? base - new_diff : base + new_diff
+        return reversed ? base + new_diff : base - new_diff
     };
     
 
     toServo = ({ rightMiddle, rightFront, leftFront, leftMiddle, leftBack, rightBack}) => {
         const servos = {
 
-            1: this.translate(leftFront.alpha, DEFAULT_SERVO_POSE_VALUE.leftFront.alpha, true),    
-            2: this.translate(leftFront.beta, DEFAULT_SERVO_POSE_VALUE.leftFront.beta, false),    
-            3: this.translate(leftFront.gamma, DEFAULT_SERVO_POSE_VALUE.leftFront.gamma, false), 
+            1: this.translate(leftFront.alpha, DEFAULT_SERVO_POSE_VALUE.leftFront.alpha, false),
+            2: this.translate(leftFront.beta, DEFAULT_SERVO_POSE_VALUE.leftFront.beta, true),
+            3: this.translate(leftFront.gamma, DEFAULT_SERVO_POSE_VALUE.leftFront.gamma, false),
 
-            5: this.translate(leftMiddle.alpha, DEFAULT_SERVO_POSE_VALUE.leftMiddle.alpha, false),    
-            6: this.translate(leftMiddle.beta, DEFAULT_SERVO_POSE_VALUE.leftMiddle.beta, false),    
-            7: this.translate(leftMiddle.gamma, DEFAULT_SERVO_POSE_VALUE.leftMiddle.gamma, false),   
+            5: this.translate(leftMiddle.alpha, DEFAULT_SERVO_POSE_VALUE.leftMiddle.alpha, false),
+            6: this.translate(leftMiddle.beta, DEFAULT_SERVO_POSE_VALUE.leftMiddle.beta, true),
+            7: this.translate(leftMiddle.gamma, DEFAULT_SERVO_POSE_VALUE.leftMiddle.gamma, false),
 
-            9: this.translate(leftBack.alpha, DEFAULT_SERVO_POSE_VALUE.leftBack.alpha, true),
+            9: this.translate(leftBack.alpha, DEFAULT_SERVO_POSE_VALUE.leftBack.alpha, false),
             10: this.translate(leftBack.beta, DEFAULT_SERVO_POSE_VALUE.leftBack.beta, true),
             11: this.translate(leftBack.gamma, DEFAULT_SERVO_POSE_VALUE.leftBack.gamma, false),
 
-            21: this.translate(rightBack.alpha, DEFAULT_SERVO_POSE_VALUE.rightBack.alpha, true),
+            21: this.translate(rightBack.alpha, DEFAULT_SERVO_POSE_VALUE.rightBack.alpha, false),
             22: this.translate(rightBack.beta, DEFAULT_SERVO_POSE_VALUE.rightBack.beta, false),
-            23: this.translate(rightBack.gamma, DEFAULT_SERVO_POSE_VALUE.rightBack.gamma, false),
+            23: this.translate(rightBack.gamma, DEFAULT_SERVO_POSE_VALUE.rightBack.gamma, true),
 
-            25: this.translate(rightMiddle.alpha, DEFAULT_SERVO_POSE_VALUE.rightMiddle.alpha, true),      
-            26: this.translate(rightMiddle.beta, DEFAULT_SERVO_POSE_VALUE.rightMiddle.beta, true),    
-            27: this.translate(rightMiddle.gamma, DEFAULT_SERVO_POSE_VALUE.rightMiddle.gamma, false), 
+            25: this.translate(rightMiddle.alpha, DEFAULT_SERVO_POSE_VALUE.rightMiddle.alpha, false),
+            26: this.translate(rightMiddle.beta, DEFAULT_SERVO_POSE_VALUE.rightMiddle.beta, false),
+            27: this.translate(rightMiddle.gamma, DEFAULT_SERVO_POSE_VALUE.rightMiddle.gamma, true),
 
-            30: this.translate(rightFront.alpha,  DEFAULT_SERVO_POSE_VALUE.rightFront.alpha, true),
-            31: this.translate(rightFront.beta,  DEFAULT_SERVO_POSE_VALUE.rightFront.beta, true),
-            32: this.translate(rightFront.gamma,  DEFAULT_SERVO_POSE_VALUE.rightFront.gamma, false)
+            30: this.translate(rightFront.alpha,  DEFAULT_SERVO_POSE_VALUE.rightFront.alpha, false),
+            31: this.translate(rightFront.beta,  DEFAULT_SERVO_POSE_VALUE.rightFront.beta, false),
+            32: this.translate(rightFront.gamma,  DEFAULT_SERVO_POSE_VALUE.rightFront.gamma, true)
         };
+        // let res = []
+        // for (const [key, value] of Object.entries(servos)) {
+        //     // res.push(`%c#${key}P${value.toFixed()}%s`);
+        //     value.toFixed() > 2200 || value.toFixed() < 1000 ? res.push(`\x1b[31m#${key}P${value.toFixed()}\x1b[0m`) : res.push(`\x1b[32m#${key}P${value.toFixed()}\x1b[0m`);
+        //   }
+        // res.push('T100')
         let res = []
         for (const [key, value] of Object.entries(servos)) {
-            // res.push(`%c#${key}P${value.toFixed()}%s`);
-            value.toFixed() > 2000 || value.toFixed() < 1100 ? res.push(`\x1b[31m#${key}P${value.toFixed()}\x1b[0m`) : res.push(`\x1b[32m#${key}P${value.toFixed()}\x1b[0m`);
-          }
+            res.push(`#${key}P${value.toFixed()}`)
+        }
         res.push('T100')
         return res
     }
@@ -120,11 +147,8 @@ class WalkingGaitsPage extends Component {
 
         const pose = getPose(this.walkSequence, step)
 
-        // fetch('http://localhost:4000/', {method: 'POST', mode: 'no-cors',  headers: {
-        //     "Content-Type": "application/json"
-        //   }, body: JSON.stringify({cmd: this.toServo(pose)})}).then(res=>console.log(res.json))
-
-        console.log(this.toServo(pose).join(""))
+        let controller_cmd = this.toServo(pose).join("")
+        ws.send(JSON.stringify(controller_cmd))
 
         if (inWalkMode) {
             this.onUpdate(pose, this.currentTwist)
@@ -149,6 +173,11 @@ class WalkingGaitsPage extends Component {
             return
         }
 
+        let controller_cmd = this.toServo(pose).join("")
+        fetch('http://localhost:4000/', {method: 'POST', mode: 'no-cors',  headers: {
+                "Content-Type": "application/json"
+            }, body: JSON.stringify({cmd: controller_cmd})}).then(res=>console.log(res.json))
+
         const matrix = tRotZmatrix(currentTwist)
         this.props.onUpdate(hexapod.cloneTrot(matrix))
     }
@@ -165,8 +194,6 @@ class WalkingGaitsPage extends Component {
             this.walkSequence
 
         const pose = getPose(this.walkSequence, animationCount)
-        const data = this.toServo(pose)
-        console.log(data.join(""))
         this.onUpdate(pose, this.currentTwist)
         this.setState({ gaitParams, isTripodGait, inWalkMode })
     }

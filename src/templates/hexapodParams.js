@@ -6,7 +6,7 @@ const DEFAULT_BODY_DIMENSIONS = {
 const DEFAULT_LEG_DIMENSIONS = {
     coxia: 35,
     femur: 85,
-    tibia: 120,
+    tibia: 100,
 }
 
 const DEFAULT_DIMENSIONS = {
@@ -15,7 +15,7 @@ const DEFAULT_DIMENSIONS = {
     middle: 80,
     coxia: 35,
     femur: 85,
-    tibia: 120,
+    tibia: 100,
 }
 
 const DEFAULT_POSE = {
@@ -28,13 +28,13 @@ const DEFAULT_POSE = {
 }
 
 const DEFAULT_SERVO_POSE_VALUE = {
-    leftFront: { alpha: 1500, beta: 1500, gamma: 1300 },
-    leftMiddle: { alpha: 1500, beta: 1500, gamma: 1400 },
-    leftBack: { alpha: 1400, beta: 1300, gamma: 1250 },
+    leftFront: { alpha: 1500, beta: 1500, gamma: 1500 },    // 1 2 3
+    leftMiddle: { alpha: 1500, beta: 1500, gamma: 1500 },   // 5 6 7
+    leftBack: { alpha: 1500, beta: 1500, gamma: 1500 },     // 9 10 11
 
-    rightFront: { alpha: 1500, beta: 1500, gamma: 1250 },
-    rightMiddle: { alpha: 1500, beta: 1500, gamma: 1250 },
-    rightBack: { alpha: 1400, beta: 1500, gamma: 1350 }
+    rightFront: { alpha: 1500, beta: 1500, gamma: 1500 },   // 30 31 32
+    rightMiddle: { alpha: 1500, beta: 1500, gamma: 1500 },  // 25 26 27
+    rightBack: { alpha: 1500, beta: 1500, gamma: 1500 }     // 20 21 22
 }
 
 const SERVO_LINK_PINS = {
@@ -47,7 +47,7 @@ const SERVO_LINK_PINS = {
     rightBack: { alpha: 21, beta: 22, gamma: 23 }
 }
 
-const DEFAULT_PATTERN_PARAMS = { alpha: 0, beta: 50, gamma: 0 }
+const DEFAULT_PATTERN_PARAMS = { alpha: 0, beta: 0, gamma: 0 }
 
 const DEFAULT_IK_PARAMS = {
     tx: 0,
@@ -63,7 +63,7 @@ const DEFAULT_IK_PARAMS = {
 const DEFAULT_GAIT_PARAMS = {
     tx: 0,
     tz: 0,
-    rx: -0.1,
+    rx: 0,
     ry: 0,
     legStance: -25,
     hipStance: 0,
