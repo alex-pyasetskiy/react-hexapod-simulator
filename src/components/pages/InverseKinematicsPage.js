@@ -5,6 +5,8 @@ import { SECTION_NAMES, IK_SLIDERS_LABELS } from "../vars"
 import { DEFAULT_IK_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 import PoseTable from "./PoseTable"
 
+const ws = new WebSocket('ws://127.0.0.1:4000')
+
 class InverseKinematicsPage extends Component {
     pageName = SECTION_NAMES.inverseKinematics
     state = { ikParams: DEFAULT_IK_PARAMS, errorMessage: null }
@@ -84,9 +86,7 @@ class InverseKinematicsPage extends Component {
         }
 
         let controller_cmd = this.toServo(result.pose).join("")
-        fetch('http://localhost:4000/', {method: 'POST', mode: 'no-cors',  headers: {
-                "Content-Type": "application/json"
-            }, body: JSON.stringify({cmd: controller_cmd})}).then(res=>console.log(res.json))
+        ws.send(JSON.stringify(controller_cmd))
 
         this.updateHexapodPlot(result.hexapod, ikParams)
     }

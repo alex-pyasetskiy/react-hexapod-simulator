@@ -5,6 +5,8 @@ import { Card, ToggleSwitch, ResetButton, NumberInputField, Slider } from "../ge
 import { DEFAULT_POSE, DEFAULT_SERVO_POSE_VALUE, SERVO_LINK_PINS } from "../../templates"
 import { SECTION_NAMES, LEG_NAMES } from "../vars"
 
+const ws = new WebSocket('ws://127.0.0.1:4000')
+
 class ForwardKinematicsPage extends Component {
     pageName = SECTION_NAMES.forwardKinematics
     state = { WidgetType: NumberInputField }
@@ -73,10 +75,8 @@ class ForwardKinematicsPage extends Component {
         }
 
         let controller_cmd = this.toServo(newPose).join("")
-        fetch('http://localhost:4000/', {method: 'POST', mode: 'no-cors',  headers: {
-                "Content-Type": "application/json"
-            }, body: JSON.stringify({cmd: controller_cmd})}).then(res=>console.log(res.json))
-        
+        ws.send(JSON.stringify(controller_cmd))
+
         console.log(this.toServo(newPose))      
 
         this.props.onUpdate(newPose)

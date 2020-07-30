@@ -29,11 +29,11 @@ const DEFAULT_POSE = {
 
 const DEFAULT_SERVO_POSE_VALUE = {
     leftFront: { alpha: 1500, beta: 1500, gamma: 1500 },    // 1 2 3
-    leftMiddle: { alpha: 1500, beta: 1500, gamma: 1500 },   // 5 6 7
+    leftMiddle: { alpha: 1500, beta: 1500, gamma: 1400 },   // 5 6 7
     leftBack: { alpha: 1500, beta: 1500, gamma: 1500 },     // 9 10 11
 
     rightFront: { alpha: 1500, beta: 1500, gamma: 1500 },   // 30 31 32
-    rightMiddle: { alpha: 1500, beta: 1500, gamma: 1500 },  // 25 26 27
+    rightMiddle: { alpha: 1500, beta: 1500, gamma: 1400 },  // 25 26 27
     rightBack: { alpha: 1500, beta: 1500, gamma: 1500 }     // 20 21 22
 }
 

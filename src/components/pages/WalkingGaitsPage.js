@@ -10,7 +10,7 @@ import { DEFAULT_GAIT_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 
 const SOCKET_URL = 'ws://127.0.0.1:4000'
 
-const ANIMATION_DELAY = 200
+const ANIMATION_DELAY = 150
 
 const getPose = (sequences, i) => {
     return Object.keys(sequences).reduce((newSequences, legPosition) => {
@@ -34,7 +34,7 @@ const switches = (switch1, switch2, switch3) => (
 
 const countSteps = sequence => sequence["leftMiddle"].alpha.length
 
-const ws = new WebSocket(SOCKET_URL)
+const ws = new WebSocket('ws://127.0.0.1:4000')
 
 class WalkingGaitsPage extends Component {
     pageName = SECTION_NAMES.walkingGaits
@@ -70,9 +70,6 @@ class WalkingGaitsPage extends Component {
         ws.onclose = () => {
             console.log('disconnected')
             // automatically try to reconnect on connection loss
-            this.setState({
-                ws: new WebSocket(SOCKET_URL),
-            })
         }
     }
 
@@ -121,12 +118,7 @@ class WalkingGaitsPage extends Component {
             31: this.translate(rightFront.beta,  DEFAULT_SERVO_POSE_VALUE.rightFront.beta, false),
             32: this.translate(rightFront.gamma,  DEFAULT_SERVO_POSE_VALUE.rightFront.gamma, true)
         };
-        // let res = []
-        // for (const [key, value] of Object.entries(servos)) {
-        //     // res.push(`%c#${key}P${value.toFixed()}%s`);
-        //     value.toFixed() > 2200 || value.toFixed() < 1000 ? res.push(`\x1b[31m#${key}P${value.toFixed()}\x1b[0m`) : res.push(`\x1b[32m#${key}P${value.toFixed()}\x1b[0m`);
-        //   }
-        // res.push('T100')
+
         let res = []
         for (const [key, value] of Object.entries(servos)) {
             res.push(`#${key}P${value.toFixed()}`)
@@ -146,10 +138,8 @@ class WalkingGaitsPage extends Component {
         const step = Math.max(0, Math.min(stepCount - 1, tempStep))
 
         const pose = getPose(this.walkSequence, step)
-
         let controller_cmd = this.toServo(pose).join("")
         ws.send(JSON.stringify(controller_cmd))
-
         if (inWalkMode) {
             this.onUpdate(pose, this.currentTwist)
             return
@@ -172,11 +162,6 @@ class WalkingGaitsPage extends Component {
         if (!hexapod || !hexapod.body) {
             return
         }
-
-        let controller_cmd = this.toServo(pose).join("")
-        fetch('http://localhost:4000/', {method: 'POST', mode: 'no-cors',  headers: {
-                "Content-Type": "application/json"
-            }, body: JSON.stringify({cmd: controller_cmd})}).then(res=>console.log(res.json))
 
         const matrix = tRotZmatrix(currentTwist)
         this.props.onUpdate(hexapod.cloneTrot(matrix))

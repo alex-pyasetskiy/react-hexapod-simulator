@@ -3,7 +3,7 @@ const SerialPort = require("serialport");
 
 const wss = new WebSocket.Server({ port: 4000 });
 
-const controller = new SerialPort("/dev/tty.usbmodem5CFA575831321", {
+const controller = new SerialPort("/dev/cu.usbmodem5CFA575831321", {
     baudRate: 115200,
     dataBits: 8,
     stopBits: 1

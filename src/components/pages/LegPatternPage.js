@@ -3,6 +3,8 @@ import { sliderList, Card, ResetButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 import { SECTION_NAMES, ANGLE_NAMES } from "../vars"
 
+const ws = new WebSocket('ws://127.0.0.1:4000')
+
 class LegPatternPage extends Component {
     pageName = SECTION_NAMES.legPatterns
     state = { patternParams: DEFAULT_PATTERN_PARAMS }
@@ -76,12 +78,8 @@ class LegPatternPage extends Component {
             newPose[leg] = patternParams
         }
         
-        console.log(newPose)
         let controller_cmd = this.toServo(newPose).join("")
-        console.log(controller_cmd)
-        fetch('http://localhost:4000/', {method: 'POST', mode: 'no-cors',  headers: {
-            "Content-Type": "application/json"
-          }, body: JSON.stringify({cmd: controller_cmd})}).then(res=>console.log(res.json))
+        ws.send(JSON.stringify(controller_cmd))
 
         this.props.onUpdate(newPose)
         this.setState({ patternParams })
