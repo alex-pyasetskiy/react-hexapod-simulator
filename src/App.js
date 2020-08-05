@@ -4,7 +4,6 @@ import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
 import { SECTION_NAMES, PATHS } from "./components/vars"
 import { Nav, NavDetailed, HexapodPlot, DimensionsWidget } from "./components"
-import { w3cwebsocket } from "websocket"
 
 import {
     ForwardKinematicsPage,
@@ -13,9 +12,6 @@ import {
     LegPatternPage,
     WalkingGaitsPage,
 } from "./components/pages"
-
-
-const client = new w3cwebsocket('ws://127.0.0.1:4000')
 
 
 class App extends React.Component {

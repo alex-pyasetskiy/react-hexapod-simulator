@@ -5,13 +5,30 @@ import { Card, ToggleSwitch, ResetButton, NumberInputField, Slider } from "../ge
 import { DEFAULT_POSE, DEFAULT_SERVO_POSE_VALUE, SERVO_LINK_PINS } from "../../templates"
 import { SECTION_NAMES, LEG_NAMES } from "../vars"
 
-const ws = new WebSocket('ws://127.0.0.1:4000')
+// const ws = new WebSocket('ws://192.168.31.2:666')
 
 class ForwardKinematicsPage extends Component {
     pageName = SECTION_NAMES.forwardKinematics
     state = { WidgetType: NumberInputField }
 
-    componentDidMount = () => this.props.onMount(this.pageName)
+    componentDidMount = () => {
+        this.props.onMount(this.pageName)
+    //     ws.onopen = () => {
+    //         // on connecting, do nothing but log it to the console
+    //         console.log('connected')
+    //     }
+        
+    //     ws.onmessage = evt => {
+    //         // on receiving a message, add it to the list of messages
+    //         // const message = JSON.parse(evt.data)
+    //     }
+        
+    //     ws.onclose = () => {
+    //         console.log('disconnected')
+    //         // automatically try to reconnect on connection loss
+    //     }
+        
+    }
 
     reset = () => this.props.onUpdate(DEFAULT_POSE)
 
@@ -75,7 +92,7 @@ class ForwardKinematicsPage extends Component {
         }
 
         let controller_cmd = this.toServo(newPose).join("")
-        ws.send(JSON.stringify(controller_cmd))
+        // ws.send(JSON.stringify(controller_cmd))
 
         console.log(this.toServo(newPose))      
 

@@ -1,9 +1,9 @@
 const WebSocket = require('ws');
 const SerialPort = require("serialport");
-
+const fs = require('fs');
 const wss = new WebSocket.Server({ port: 4000 });
 
-const controller = new SerialPort("/dev/cu.usbmodem5CFA575831321", {
+const controller = new SerialPort("/dev/tty.usbmodem5CFA575831321", {
     baudRate: 115200,
     dataBits: 8,
     stopBits: 1
@@ -25,6 +25,9 @@ wss.on('connection', function connection(ws, req) {
         console.log('received: %s', message);
         const buf = Buffer.from(`${message}\r\n`)
         controller.write(buf.toString('ascii'));
+        // fs.writeFile('log.txt', buf.toString('ascii'), {'flag':'a'}, function (err) {
+        //     if (err) return console.error(err);
+        //   });
     });
 
     ws.send('something');

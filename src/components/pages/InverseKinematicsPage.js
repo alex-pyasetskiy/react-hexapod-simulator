@@ -6,12 +6,28 @@ import { DEFAULT_IK_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 import PoseTable from "./PoseTable"
 
 const ws = new WebSocket('ws://127.0.0.1:4000')
-
 class InverseKinematicsPage extends Component {
     pageName = SECTION_NAMES.inverseKinematics
     state = { ikParams: DEFAULT_IK_PARAMS, errorMessage: null }
 
-    componentDidMount = () => this.props.onMount(this.pageName)
+    componentDidMount = () => {
+        this.props.onMount(this.pageName)
+        
+        ws.onopen = () => {
+            // on connecting, do nothing but log it to the console
+            console.log('connected')
+        }
+
+        ws.onmessage = evt => {
+            // on receiving a message, add it to the list of messages
+            // const message = JSON.parse(evt.data)
+        }
+
+        ws.onclose = () => {
+            console.log('disconnected')
+            // automatically try to reconnect on connection loss
+        }
+    }
 
     reset = () => {
         const result = solveInverseKinematics(

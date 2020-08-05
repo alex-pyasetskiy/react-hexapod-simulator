@@ -6,7 +6,7 @@ const DEFAULT_BODY_DIMENSIONS = {
 const DEFAULT_LEG_DIMENSIONS = {
     coxia: 35,
     femur: 85,
-    tibia: 100,
+    tibia: 90,
 }
 
 const DEFAULT_DIMENSIONS = {
@@ -15,7 +15,7 @@ const DEFAULT_DIMENSIONS = {
     middle: 80,
     coxia: 35,
     femur: 85,
-    tibia: 100,
+    tibia: 90,
 }
 
 const DEFAULT_POSE = {

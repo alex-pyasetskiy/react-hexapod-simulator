@@ -8,7 +8,7 @@ import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 
 
-const SOCKET_URL = 'ws://127.0.0.1:4000'
+const SOCKET_URL = 'ws://127.0.0.1:4000/'
 
 const ANIMATION_DELAY = 150
 
@@ -34,7 +34,7 @@ const switches = (switch1, switch2, switch3) => (
 
 const countSteps = sequence => sequence["leftMiddle"].alpha.length
 
-const ws = new WebSocket('ws://127.0.0.1:4000')
+const ws = new WebSocket(SOCKET_URL)
 
 class WalkingGaitsPage extends Component {
     pageName = SECTION_NAMES.walkingGaits

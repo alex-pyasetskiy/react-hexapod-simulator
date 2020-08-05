@@ -3,8 +3,7 @@ import { sliderList, Card, ResetButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 import { SECTION_NAMES, ANGLE_NAMES } from "../vars"
 
-const ws = new WebSocket('ws://127.0.0.1:4000')
-
+const ws = new WebSocket('ws://127.0.0.1:4000/')
 class LegPatternPage extends Component {
     pageName = SECTION_NAMES.legPatterns
     state = { patternParams: DEFAULT_PATTERN_PARAMS }
@@ -12,6 +11,21 @@ class LegPatternPage extends Component {
     componentDidMount = () => {
         this.props.onMount(this.pageName)
         this.reset()
+        
+        ws.onopen = () => {
+            // on connecting, do nothing but log it to the console
+            console.log('connected')
+        }
+
+        ws.onmessage = evt => {
+            // on receiving a message, add it to the list of messages
+            // const message = JSON.parse(evt.data)
+        }
+
+        ws.onclose = () => {
+            console.log('disconnected')
+            // automatically try to reconnect on connection loss
+        }
     }
 
     reset = () => {
