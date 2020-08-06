@@ -3,7 +3,7 @@ import { sliderList, Card, ResetButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 import { SECTION_NAMES, ANGLE_NAMES } from "../vars"
 
-const ws = new WebSocket('ws://127.0.0.1:4000/')
+const ws = new WebSocket('ws://192.168.31.2:4000')
 class LegPatternPage extends Component {
     pageName = SECTION_NAMES.legPatterns
     state = { patternParams: DEFAULT_PATTERN_PARAMS }

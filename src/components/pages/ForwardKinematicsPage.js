@@ -5,7 +5,7 @@ import { Card, ToggleSwitch, ResetButton, NumberInputField, Slider } from "../ge
 import { DEFAULT_POSE, DEFAULT_SERVO_POSE_VALUE, SERVO_LINK_PINS } from "../../templates"
 import { SECTION_NAMES, LEG_NAMES } from "../vars"
 
-// const ws = new WebSocket('ws://192.168.31.2:666')
+const ws = new WebSocket('ws://192.168.31.2:4000')
 
 class ForwardKinematicsPage extends Component {
     pageName = SECTION_NAMES.forwardKinematics
@@ -13,20 +13,20 @@ class ForwardKinematicsPage extends Component {
 
     componentDidMount = () => {
         this.props.onMount(this.pageName)
-    //     ws.onopen = () => {
-    //         // on connecting, do nothing but log it to the console
-    //         console.log('connected')
-    //     }
+        ws.onopen = () => {
+            // on connecting, do nothing but log it to the console
+            console.log('connected')
+        }
         
-    //     ws.onmessage = evt => {
-    //         // on receiving a message, add it to the list of messages
-    //         // const message = JSON.parse(evt.data)
-    //     }
+        ws.onmessage = evt => {
+            // on receiving a message, add it to the list of messages
+            // const message = JSON.parse(evt.data)
+        }
         
-    //     ws.onclose = () => {
-    //         console.log('disconnected')
-    //         // automatically try to reconnect on connection loss
-    //     }
+        ws.onclose = () => {
+            console.log('disconnected')
+            // automatically try to reconnect on connection loss
+        }
         
     }
 
