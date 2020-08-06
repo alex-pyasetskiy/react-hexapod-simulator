@@ -26,13 +26,12 @@ const POSITION_NAMES_LIST = [
 const ANGLE_NAMES_LIST = ["alpha", "beta", "gamma"]
 
 const MAX_ANGLES = {
-    alpha: 90,
-    beta: 180,
-    gamma: 180,
+    alpha: 120,
+    beta: 120,
+    gamma: 120,
 }
 
 /*
-
    hexapodYaxis
        ^
        |
@@ -41,9 +40,7 @@ const MAX_ANGLES = {
       / (cog)
      /
   hexapodZaxis
-
   Relative x-axis, for each attached linkage
-
   (+135)  x2          x1 (+45)
            \   head  /
             *---*---*
@@ -61,11 +58,11 @@ const MAX_ANGLES = {
  */
 const POSITION_NAME_TO_AXIS_ANGLE_MAP = {
     rightMiddle: 0,
-    rightFront: 55,
-    leftFront: 145,
+    rightFront: 45,
+    leftFront: 135,
     leftMiddle: 180,
     leftBack: 225,
-    rightBack: 325,
+    rightBack: 315,
 }
 
 const POSITION_NAME_TO_IS_LEFT_MAP = {
