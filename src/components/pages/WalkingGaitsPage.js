@@ -8,7 +8,7 @@ import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 
 
-const SOCKET_URL = 'ws://192.168.31.2:4000'
+const SOCKET_URL = 'ws://localhost:4000'
 
 const ANIMATION_DELAY = 150
 
