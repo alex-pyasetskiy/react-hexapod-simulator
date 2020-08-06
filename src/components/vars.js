@@ -78,14 +78,14 @@ const RANGE_PARAMS = {
 
 const GAIT_RANGE_PARAMS = {
     tx: { minVal: -0.25, maxVal: 0.25, stepVal: 0.01, defaultVal: 0 },
-    tz: { minVal: -0.5, maxVal: 0.5, stepVal: 0.01, defaultVal: 0 },
+    tz: { minVal: -0.5, maxVal: 0.5, stepVal: 0.01, defaultVal: -0.1 },
     rx: { minVal: -15, maxVal: 15, stepVal: 0.5, defaultVal: 0 },
     ry: { minVal: -15, maxVal: 15, stepVal: 0.5, defaultVal: 0 },
-    legStance: { minVal: -50, maxVal: 50, stepVal: 0.5, defaultVal: 0 },
+    legStance: { minVal: -50, maxVal: 50, stepVal: 0.5, defaultVal: -25 },
     hipStance: { minVal: 0, maxVal: 40, stepVal: 0.5, defaultVal: 20 },
-    hipSwing: { minVal: 10, maxVal: 40, stepVal: 0.5, defaultVal: 25 },
+    hipSwing: { minVal: 10, maxVal: 40, stepVal: 0.5, defaultVal: 15 },
     liftSwing: { minVal: 10, maxVal: 70, stepVal: 0.5, defaultVal: 40 },
-    stepCount: { minVal: 2, maxVal: 15, stepVal: 1, defaultVal: 5 }
+    stepCount: { minVal: 2, maxVal: 15, stepVal: 1, defaultVal: 2 }
 }
 /*************
  * ICONS

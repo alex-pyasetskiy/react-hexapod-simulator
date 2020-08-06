@@ -4,6 +4,7 @@ import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
 import { SECTION_NAMES, PATHS } from "./components/vars"
 import { Nav, NavDetailed, HexapodPlot, DimensionsWidget } from "./components"
+
 import {
     ForwardKinematicsPage,
     InverseKinematicsPage,

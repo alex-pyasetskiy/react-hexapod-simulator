@@ -1,0 +1,11 @@
+{
+    "sshfs.configs": [
+        {
+            "host": "192.168.31.2",
+            "name": "hexabot",
+            "password": "123456",
+            "root": "/home/pi",
+            "username": "pi"
+        }
+    ]
+}
