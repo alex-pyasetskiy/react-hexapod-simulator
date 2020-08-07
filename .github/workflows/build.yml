@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [12.x]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -43,11 +43,11 @@ jobs:
      # Yarn is included in the list of software installed on the GitHub-hosted Ubuntu
      # so there's no need to include a step install Yarn.
 
-    - name: Add prettier
-      run: yarn add prettier --dev
+    # - name: Add prettier
+    #   run: yarn add prettier --dev
 
-    - name: Check code style
-      run: yarn run prettier --config ./.prettierrc.yaml --check  ./src/*
+    # - name: Check code style
+    #   run: yarn run prettier --config ./.prettierrc.yaml --check  ./src/*
 
     - name: Install project dependencies
       if: steps.yarn-cache.outputs.cache-hit != 'true'
@@ -56,11 +56,11 @@ jobs:
     - name: Build project
       run: yarn build
 
-    - name: Test and generate coverage report
-      run: yarn test --watchAll=false --coverage
+    # - name: Test and generate coverage report
+    #   run: yarn test --watchAll=false --coverage
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        name: codecov-umbrella
-        fail_ci_if_error: false
+    # - name: Upload coverage to Codecov
+    #   uses: codecov/codecov-action@v1
+    #   with:
+    #     name: codecov-umbrella
+    #     fail_ci_if_error: false

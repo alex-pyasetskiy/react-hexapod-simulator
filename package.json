@@ -28,7 +28,7 @@
         "analyze": "source-map-explorer 'build/static/js/*.js'",
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "api": "node src/server.js nodeamon",
+        "gamepad": "sudo node src/gamepad.js nodeamon",
         "eject": "react-scripts eject",
         "deploy": "gh-pages -d build"
     },
