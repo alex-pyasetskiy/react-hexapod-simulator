@@ -64,13 +64,13 @@ class WalkingGaitsPage extends Component {
         }
 
         // init gamepad socket listener
-        gamepadSoc.onopen() = () => {
+        gamepadSoc.onopen = () => {
             console.info('gamepad connected')
         }
-        gamepadSoc.onmessage() = event => {
+        gamepadSoc.onmessage = event => {
             console.error(`gamepad event = ${event}`)
         }
-        gamepadSoc.onclose() = () => {
+        gamepadSoc.onclose = () => {
             console.info('gamepad disconnected')
         }
     }
