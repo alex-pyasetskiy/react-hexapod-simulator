@@ -7,8 +7,8 @@ import { VirtualHexapod } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 
-
-const SOCKET_URL = 'ws://localhost:4000'
+const ws = new WebSocket('ws://localhost:4000')
+const gamepadSoc = new WebSocket('ws://localhost:6000')
 
 const ANIMATION_DELAY = 150
 
@@ -34,8 +34,6 @@ const switches = (switch1, switch2, switch3) => (
 
 const countSteps = sequence => sequence["leftMiddle"].alpha.length
 
-const ws = new WebSocket(SOCKET_URL)
-
 class WalkingGaitsPage extends Component {
     pageName = SECTION_NAMES.walkingGaits
     currentTwist = 0
@@ -56,20 +54,24 @@ class WalkingGaitsPage extends Component {
         this.props.onMount(this.pageName)
         const { isTripodGait, inWalkMode } = this.state
         this.setWalkSequence(DEFAULT_GAIT_PARAMS, isTripodGait, inWalkMode)
-
+        
+        // init servo socket client
         ws.onopen = () => {
-            // on connecting, do nothing but log it to the console
-            console.log('connected')
+            console.log('servo controller connected')
         }
-
-        ws.onmessage = evt => {
-            // on receiving a message, add it to the list of messages
-            // const message = JSON.parse(evt.data)
-        }
-
         ws.onclose = () => {
-            console.log('disconnected')
-            // automatically try to reconnect on connection loss
+            console.log('servo controller disconnected')
+        }
+
+        // init gamepad socket listener
+        gamepadSoc.onopen() = () => {
+            console.info('gamepad connected')
+        }
+        gamepadSoc.onmessage() = event => {
+            console.error(`gamepad event = ${event}`)
+        }
+        gamepadSoc.onclose() = () => {
+            console.info('gamepad disconnected')
         }
     }
 

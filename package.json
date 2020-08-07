@@ -10,7 +10,9 @@
         "acorn": "^7.3.1",
         "body-parser": "^1.19.0",
         "dotenv": "^8.2.0",
+        "express": "^4.15.2",
         "jest-canvas-mock": "^2.2.0",
+        "joystick-logitech-f710": "^0.3.1",
         "plotly.js": "^1.54.6",
         "plotly.js-gl3d-dist-min": "^1.54.2",
         "react": "^16.13.1",
@@ -21,6 +23,7 @@
         "react-router-dom": "^5.2.0",
         "react-scripts": "3.4.1",
         "serialport": "^9.0.0",
+        "socket.io-client": "^2.3.0",
         "source-map-explorer": "^2.4.2",
         "typescript": "^3.9.6"
     },
