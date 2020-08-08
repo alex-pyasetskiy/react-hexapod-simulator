@@ -7,7 +7,7 @@ import { VirtualHexapod } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 
-const ws = new WebSocket('ws://hexabot.node:3030')
+const ws = new WebSocket('ws://hexabot.node:4000/')
 
 const ANIMATION_DELAY = 150
 

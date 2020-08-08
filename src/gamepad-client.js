@@ -3,7 +3,7 @@ const http = require('http');
 
 const WebSocket = require('ws')
 
-const server = http.createServer({ port: 3030 });
+const server = http.createServer({ port: 4000 });
 const wss = new WebSocket.Server({ server });
 
 

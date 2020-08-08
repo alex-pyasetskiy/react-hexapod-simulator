@@ -5,7 +5,7 @@ import { Card, ToggleSwitch, ResetButton, NumberInputField, Slider } from "../ge
 import { DEFAULT_POSE, DEFAULT_SERVO_POSE_VALUE, SERVO_LINK_PINS } from "../../templates"
 import { SECTION_NAMES, LEG_NAMES } from "../vars"
 
-const ws = new WebSocket('ws://hexabot.node:7000')
+const ws = new WebSocket('ws://hexabot.node:4000/')
 
 class ForwardKinematicsPage extends Component {
     pageName = SECTION_NAMES.forwardKinematics
