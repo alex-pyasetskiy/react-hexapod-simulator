@@ -1,11 +1,33 @@
 var Joystick = require("joystick-logitech-f710");
+const http = require('http');
 
 const WebSocket = require('ws')
 
-const wss = new WebSocket.Server({ port: 6000 })
+const server = http.createServer({ port: 3030 });
+const wss = new WebSocket.Server({ server });
+
+
+function noop() {}
+ 
+function heartbeat() {
+  this.isAlive = true;
+}
+// const wss = new WebSocket.Server({port: 3030 })
+
+const interval = setInterval(function ping() {
+    wss.clients.forEach(function each(ws) {
+      if (ws.isAlive === false) return ws.terminate();
+   
+      ws.isAlive = false;
+      ws.ping(noop);
+    });
+  }, 5000);
 
 wss.on('connection', ws => {
-    console.log("Connected")
+    ws.isAlive = true;
+    ws.on('pong', heartbeat);
+
+
     Joystick.create("/dev/input/js0", function (err, joystick) {
         if (err) {
           throw err;
@@ -142,7 +164,11 @@ wss.on('connection', ws => {
         console.log(`Received message => ${message}`)
     })
     
-})
+});
+
+wss.on('close', function close() {
+    clearInterval(interval);
+});
 
 
 // Joystick.create("/dev/input/js0", function (err, joystick) {

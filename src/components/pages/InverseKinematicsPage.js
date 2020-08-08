@@ -5,7 +5,7 @@ import { SECTION_NAMES, IK_SLIDERS_LABELS } from "../vars"
 import { DEFAULT_IK_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 import PoseTable from "./PoseTable"
 
-const ws = new WebSocket('ws://localhost:4000')
+const ws = new WebSocket('ws://hexabot.node:7000')
 class InverseKinematicsPage extends Component {
     pageName = SECTION_NAMES.inverseKinematics
     state = { ikParams: DEFAULT_IK_PARAMS, errorMessage: null }

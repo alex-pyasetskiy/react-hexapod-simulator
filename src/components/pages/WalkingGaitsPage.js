@@ -7,8 +7,8 @@ import { VirtualHexapod } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
 
-const ws = new WebSocket('ws://localhost:4000')
-const gamepadSoc = new WebSocket('ws://localhost:6000')
+const ws = new WebSocket('ws://hexabot.node:3030')
+const gamepadSoc = new WebSocket('ws://hexabot.node:7000')
 
 const ANIMATION_DELAY = 150
 
@@ -33,6 +33,18 @@ const switches = (switch1, switch2, switch3) => (
 )
 
 const countSteps = sequence => sequence["leftMiddle"].alpha.length
+
+function heartbeat() {
+    clearTimeout(this.pingTimeout);
+   
+    // Use `WebSocket#terminate()`, which immediately destroys the connection,
+    // instead of `WebSocket#close()`, which waits for the close timer.
+    // Delay should be equal to the interval at which your server
+    // sends out pings plus a conservative assumption of the latency.
+    this.pingTimeout = setTimeout(() => {
+      this.terminate();
+    }, 30000 + 1000);
+  }
 
 class WalkingGaitsPage extends Component {
     pageName = SECTION_NAMES.walkingGaits
@@ -64,15 +76,21 @@ class WalkingGaitsPage extends Component {
         }
 
         // init gamepad socket listener
-        gamepadSoc.onopen = () => {
-            console.info('gamepad connected')
-        }
-        gamepadSoc.onmessage = event => {
-            console.error(`gamepad event = ${event}`)
-        }
-        gamepadSoc.onclose = () => {
-            console.info('gamepad disconnected')
-        }
+        // gamepadSoc.onopen = () => {
+        //     console.info('gamepad connected')
+        // }
+        // gamepadSoc.onmessage = event => {
+        //     console.error(`gamepad event = ${event}`)
+        // }
+        // gamepadSoc.onclose = () => {
+        //     console.info('gamepad disconnected')
+        // }
+
+        gamepadSoc.on('open', heartbeat);
+        gamepadSoc.on('ping', heartbeat);
+        gamepadSoc.on('close', function clear() {
+            clearTimeout(this.pingTimeout);
+        });     
     }
 
     componentWillUnmount = () => {

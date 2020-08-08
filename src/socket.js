@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 const SerialPort = require("serialport");
 const fs = require('fs');
-const wss = new WebSocket.Server({ host: "localhost", port: 4000 });
+const wss = new WebSocket.Server({ port: 3030 });
 
 
 var controller;
