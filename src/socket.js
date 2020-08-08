@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 const SerialPort = require("serialport");
 const fs = require('fs');
-const wss = new WebSocket.Server({ port: 3030 });
+const wss = new WebSocket.Server({ host: 'ws://hexabot.node', port: 3030 });
 
 
 var controller;
