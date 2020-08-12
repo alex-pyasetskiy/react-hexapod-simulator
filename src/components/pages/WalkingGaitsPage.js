@@ -3,9 +3,9 @@ import { sliderList, Card, ResetButton, ToggleSwitch } from "../generic"
 import { SECTION_NAMES, GAIT_SLIDER_LABELS, GAIT_RANGE_PARAMS } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import PoseTable from "./PoseTable"
-import { VirtualHexapod } from "../../hexapod"
+import { VirtualHexapod, controllerCMD } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
-import { DEFAULT_GAIT_PARAMS, DEFAULT_SERVO_POSE_VALUE } from "../../templates"
+import { DEFAULT_GAIT_PARAMS } from "../../configs"
 
 const ws = new WebSocket('ws://hexabot.node:4000/')
 
@@ -67,56 +67,6 @@ class WalkingGaitsPage extends Component {
         clearInterval(this.intervalID)
     }
 
-    translate = (angle, base, reversed) => {
-        const minAngle = -90
-        const maxAngle = 90
-        const minPulse = 500
-        const maxPulse = 2500
-        const scale = (maxPulse - minPulse)/(maxAngle - minAngle)
-        const new_diff = scale * angle
-        if (angle === 0) {
-            return base
-        }
-        return reversed ? base + new_diff : base - new_diff
-    };
-    
-
-    toServo = ({ rightMiddle, rightFront, leftFront, leftMiddle, leftBack, rightBack}) => {
-        const servos = {
-
-            1: this.translate(leftFront.alpha, DEFAULT_SERVO_POSE_VALUE.leftFront.alpha, false),
-            2: this.translate(leftFront.beta, DEFAULT_SERVO_POSE_VALUE.leftFront.beta, true),
-            3: this.translate(leftFront.gamma, DEFAULT_SERVO_POSE_VALUE.leftFront.gamma, false),
-
-            5: this.translate(leftMiddle.alpha, DEFAULT_SERVO_POSE_VALUE.leftMiddle.alpha, false),
-            6: this.translate(leftMiddle.beta, DEFAULT_SERVO_POSE_VALUE.leftMiddle.beta, true),
-            7: this.translate(leftMiddle.gamma, DEFAULT_SERVO_POSE_VALUE.leftMiddle.gamma, false),
-
-            9: this.translate(leftBack.alpha, DEFAULT_SERVO_POSE_VALUE.leftBack.alpha, false),
-            10: this.translate(leftBack.beta, DEFAULT_SERVO_POSE_VALUE.leftBack.beta, true),
-            11: this.translate(leftBack.gamma, DEFAULT_SERVO_POSE_VALUE.leftBack.gamma, false),
-
-            21: this.translate(rightBack.alpha, DEFAULT_SERVO_POSE_VALUE.rightBack.alpha, false),
-            22: this.translate(rightBack.beta, DEFAULT_SERVO_POSE_VALUE.rightBack.beta, false),
-            23: this.translate(rightBack.gamma, DEFAULT_SERVO_POSE_VALUE.rightBack.gamma, true),
-
-            25: this.translate(rightMiddle.alpha, DEFAULT_SERVO_POSE_VALUE.rightMiddle.alpha, false),
-            26: this.translate(rightMiddle.beta, DEFAULT_SERVO_POSE_VALUE.rightMiddle.beta, false),
-            27: this.translate(rightMiddle.gamma, DEFAULT_SERVO_POSE_VALUE.rightMiddle.gamma, true),
-
-            30: this.translate(rightFront.alpha,  DEFAULT_SERVO_POSE_VALUE.rightFront.alpha, false),
-            31: this.translate(rightFront.beta,  DEFAULT_SERVO_POSE_VALUE.rightFront.beta, false),
-            32: this.translate(rightFront.gamma,  DEFAULT_SERVO_POSE_VALUE.rightFront.gamma, true)
-        };
-
-        let res = []
-        for (const [key, value] of Object.entries(servos)) {
-            res.push(`#${key}P${value.toFixed()}`)
-        }
-        res.push('T100')
-        return res
-    }
-
     animate = () => {
         const { isForward, inWalkMode } = this.state
 
@@ -128,7 +78,7 @@ class WalkingGaitsPage extends Component {
         const step = Math.max(0, Math.min(stepCount - 1, tempStep))
 
         const pose = getPose(this.walkSequence, step)
-        let controller_cmd = this.toServo(pose).join("")
+        let controller_cmd = controllerCMD(pose).join("")
         ws.send(JSON.stringify(controller_cmd))
         if (inWalkMode) {
             this.onUpdate(pose, this.currentTwist)

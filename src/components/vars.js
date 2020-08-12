@@ -71,9 +71,9 @@ const RANGE_PARAMS = {
     rz: RANGES[60],
     legStance: RANGES[90],
     hipStance: RANGES[60],
-    alpha: RANGES[90],
+    alpha: RANGES[45],
     beta: RANGES[90],
-    gamma: RANGES[90],
+    gamma: RANGES[60],
 }
 
 const GAIT_RANGE_PARAMS = {

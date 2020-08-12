@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import NumberInputField from "./generic/NumberInputField"
 import { Card, ResetButton, ToggleSwitch } from "./generic/SmallWidgets"
-import { DEFAULT_DIMENSIONS } from "../templates"
+import { DEFAULT_DIMENSIONS } from "../configs"
 import { SECTION_NAMES, DIMENSION_NAMES, RANGE_PARAMS } from "./vars"
 
 class DimensionsWidget extends Component {

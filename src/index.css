@@ -113,6 +113,7 @@ tr:hover {
 
 .sidebar {
     min-width: 350px;
+    min-height: 300px;
     flex: 1;
     margin-right: 15px;
     box-sizing: border-box;
@@ -122,17 +123,21 @@ tr:hover {
     flex-grow: 1;
 }
 
+
 .plot {
-    width: 100%;
+    width: 95%;
+    height: 450px;
+    min-width: 250px;
 }
 
 .main {
     display: flex;
     margin: 0 10px 0 10px;
+    flex-direction: column;
 }
 
 .link-icon {
-    font-size: 20px;
+    font-size: 15px;
     margin: 0.4rem;
     margin-bottom: 0px;
     margin-top: 0px;
@@ -327,8 +332,10 @@ input[type="number"] {
 .switch-container {
     cursor: pointer;
     display: flex;
-    align-items: center;
-    margin-left: 5px;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 35px;
+
 }
 
 /* The switch - the box around the slider */
@@ -342,7 +349,7 @@ input[type="number"] {
 
 .switch + .label {
     cursor: pointer;
-    width: unset;
+    /* width: unset; */
 }
 
 /* Hide default HTML checkbox */
@@ -364,17 +371,18 @@ input[type="number"] {
     background-color: #ef5777;
     -webkit-transition: 0.4s;
     transition: 0.4s;
+    width: 100px;
+    height: 30px;
 }
 
 .toggle-switch-widget:before {
     position: absolute;
     content: "";
-    height: 13px;
-    width: 13px;
-    left: 2px;
+    height: 80%;
+    width: 35%;
+    left: 10px;
     bottom: 2px;
     background-color: rgb(44, 62, 80);
-    -webkit-transition: 0.4s;
     transition: 0.4s;
 }
 
@@ -387,25 +395,25 @@ input:focus + .toggle-switch-widget {
 }
 
 input:checked + .toggle-switch-widget:before {
-    -webkit-transform: translateX(13px);
-    -ms-transform: translateX(13px);
-    transform: translateX(13px);
+    -webkit-transform: translateX(50px);
+    -ms-transform: translateX(50px);
+    transform: translateX(50px);
 }
 
 /* Rounded sliders */
 .toggle-switch-widget.round {
-    border-radius: 17px;
+    border-radius: 10px;
 }
 
 .toggle-switch-widget.round:before {
-    border-radius: 50%;
+    border-radius: 20%;
 }
 
-@media screen and (min-height: 625px) and (min-width: 900px) {
+/* @media screen and (min-height: 625px) and (min-width: 900px) {
     .sidebar {
         min-height: 600px;
     }
-}
+} */
 
 @media screen and (max-width: 900px) {
     .input {
@@ -416,13 +424,13 @@ input:checked + .toggle-switch-widget:before {
         font-size: 1.2rem;
     }
 
-    .sidebar {
+    /* .sidebar {
         min-width: 325px;
-    }
+    } */
 
     .plot {
-        width: 100%;
-        height: 300px;
+        width: 95%;
+        height: 450px;
         min-width: 250px;
     }
 

@@ -11,8 +11,11 @@ import { RANGE_PARAMS } from "../vars"
  *   handleChange: callback to call when slider changes
  *
  * */
-const Slider = ({ name, id, value, rangeParams, handleChange }) => (
-    <div className="slider-container cell">
+
+
+const Slider = ({ name, id, value, rangeParams, handleChange }) => {
+    return (
+        <div className="slider-container cell">
         <div className="label">
             <label htmlFor={id || name}>{name}</label>: <span>{value}</span>
         </div>
@@ -27,7 +30,8 @@ const Slider = ({ name, id, value, rangeParams, handleChange }) => (
             className="slider"
         />
     </div>
-)
+    )
+}
 
 const sliderList = ({ names, values, handleChange, rangeParams }) =>
     names.map(name => (

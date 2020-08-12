@@ -1,6 +1,6 @@
 import { POSITION_NAMES_LIST, POSITION_NAME_TO_ID_MAP } from "./constants"
 import { matrixToAlignVectorAtoB, tRotZmatrix } from "./geometry"
-import { DEFAULT_POSE } from "../templates"
+import { DEFAULT_POSE } from "../configs"
 
 import Vector from "./Vector"
 import Hexagon from "./Hexagon"

@@ -1,7 +1,7 @@
 import React from "react"
 import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
-import * as defaults from "./templates"
+import * as configs from "./configs"
 import { SECTION_NAMES, PATHS } from "./components/vars"
 import { Nav, NavDetailed, HexapodPlot, DimensionsWidget } from "./components"
 import {
@@ -15,15 +15,15 @@ import {
 
 class App extends React.Component {
     plot = {
-        cameraView: defaults.CAMERA_VIEW,
-        data: defaults.DATA,
-        layout: defaults.LAYOUT,
+        cameraView: configs.CAMERA_VIEW,
+        data: configs.DATA,
+        layout: configs.LAYOUT,
     }
 
     state = {
         inHexapodPage: false,
-        hexapodDimensions: defaults.DEFAULT_DIMENSIONS,
-        hexapodPose: defaults.DEFAULT_POSE,
+        hexapodDimensions: configs.DEFAULT_DIMENSIONS,
+        hexapodPose: configs.DEFAULT_POSE,
         revision: 0,
     }
 
@@ -38,7 +38,7 @@ class App extends React.Component {
         }
 
         this.setState({ inHexapodPage: true })
-        this.updatePlot(this.state.hexapodDimensions, defaults.DEFAULT_POSE)
+        this.updatePlot(this.state.hexapodDimensions, configs.DEFAULT_POSE)
     }
 
     updatePlotWithHexapod = hexapod => {
@@ -158,13 +158,12 @@ class App extends React.Component {
         <Router>
             <Nav />
             <div className="main content">
-                <div className="sidebar column-container cell">
-                    {this.dimensions()}
+                <div className="controls page-content">
+                    {/* {this.dimensions()} */}
                     {this.page()}
                 </div>
                 {this.hexapodPlot()}
             </div>
-            {this.navDetailed()}
         </Router>
     )
 }
