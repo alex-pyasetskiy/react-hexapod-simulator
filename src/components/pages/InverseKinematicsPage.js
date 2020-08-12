@@ -1,13 +1,13 @@
 import React, { Component } from "react"
 import { sliderList, Card, ResetButton, AlertBox } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
-import { SECTION_NAMES, IK_SLIDERS_LABELS } from "../vars"
+import { SECTION_NAMES, IK_SLIDERS_LABELS , BOARD_SOCKET} from "../vars"
 import { DEFAULT_IK_PARAMS } from "../../configs"
 import { controllerCMD } from "../../hexapod"
 
 import PoseTable from "./PoseTable"
 
-const ws = new WebSocket('ws://hexabot.node:4000/')
+const ws = new WebSocket(BOARD_SOCKET)
 class InverseKinematicsPage extends Component {
     pageName = SECTION_NAMES.inverseKinematics
     state = { ikParams: DEFAULT_IK_PARAMS, errorMessage: null }

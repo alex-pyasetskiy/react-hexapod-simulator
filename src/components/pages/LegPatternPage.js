@@ -1,11 +1,11 @@
 import React, { Component } from "react"
 import { sliderList, Card, ResetButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS } from "../../configs"
-import { SECTION_NAMES, ANGLE_NAMES } from "../vars"
+import { SECTION_NAMES, ANGLE_NAMES, BOARD_SOCKET} from "../vars"
 import { controllerCMD } from "../../hexapod"
 
 
-const ws = new WebSocket('ws://hexabot.node:4000/')
+const ws = new WebSocket(BOARD_SOCKET)
 class LegPatternPage extends Component {
     pageName = SECTION_NAMES.legPatterns
     state = { patternParams: DEFAULT_PATTERN_PARAMS }

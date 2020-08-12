@@ -3,11 +3,11 @@ import { renderToString } from "react-dom/server"
 import LegPoseWidget from "./LegPoseWidgets"
 import { Card, ToggleSwitch, ResetButton, NumberInputField, Slider } from "../generic"
 import { DEFAULT_POSE } from "../../configs"
-import { SECTION_NAMES, LEG_NAMES } from "../vars"
+import { SECTION_NAMES, LEG_NAMES, BOARD_SOCKET } from "../vars"
 import { controllerCMD } from "../../hexapod"
 
 
-const ws = new WebSocket('ws://hexabot.node:4000/')
+const ws = new WebSocket(BOARD_SOCKET)
 
 class ForwardKinematicsPage extends Component {
     pageName = SECTION_NAMES.forwardKinematics

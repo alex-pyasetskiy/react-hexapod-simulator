@@ -3,7 +3,9 @@ import { GiCoffeeMug } from "react-icons/gi"
 import { FaGithubAlt, FaTimes, FaCheck, FaHome, FaSquare } from "react-icons/fa"
 import { GrStatusGoodSmall } from "react-icons/gr"
 
-const SECTION_NAMES = {
+export const BOARD_SOCKET = 'ws://localhost:4000/'
+
+export const SECTION_NAMES = {
     dimensions: "Dimensions",
     inverseKinematics: "Inverse Kinematics",
     forwardKinematics: "Forward Kinematics",
@@ -12,7 +14,7 @@ const SECTION_NAMES = {
     walkingGaits: "Walking Gaits",
 }
 
-const PATH_NAMES = {
+export const PATH_NAMES = {
     inverseKinematics: "/inverse-kinematics",
     forwardKinematics: "/forward-kinematics",
     legPatterns: "/leg-patterns",
@@ -20,9 +22,9 @@ const PATH_NAMES = {
     walkingGaits: "/walking-gaits",
 }
 
-const ANGLE_NAMES = ["alpha", "beta", "gamma"]
-const DIMENSION_NAMES = ["front", "side", "middle", "coxia", "femur", "tibia"]
-const LEG_NAMES = [
+export const ANGLE_NAMES = ["alpha", "beta", "gamma"]
+export const DIMENSION_NAMES = ["front", "side", "middle", "coxia", "femur", "tibia"]
+export const LEG_NAMES = [
     "leftFront",
     "rightFront",
     "leftMiddle",
@@ -31,10 +33,10 @@ const LEG_NAMES = [
     "rightBack",
 ]
 
-const IK_SLIDERS_LABELS = ["tx", "ty", "tz", "rx", "ry", "rz", "hipStance", "legStance"]
-const RESET_LABEL = "reset"
+export const IK_SLIDERS_LABELS = ["tx", "ty", "tz", "rx", "ry", "rz", "hipStance", "legStance"]
+export const RESET_LABEL = "reset"
 
-const GAIT_SLIDER_LABELS = [
+export const GAIT_SLIDER_LABELS = [
     "hipSwing",
     "liftSwing",
     "legStance",
@@ -51,7 +53,7 @@ const GAIT_SLIDER_LABELS = [
  *************/
 
 const rangeParams = absVal => ({ minVal: -absVal, maxVal: absVal, stepVal: 1 })
-const RANGES = {
+export const RANGES = {
     30: rangeParams(30),
     45: rangeParams(45),
     60: rangeParams(60),
@@ -61,7 +63,7 @@ const RANGES = {
 
 const translateInputs = { minVal: -1, maxVal: 1, stepVal: 0.01 }
 
-const RANGE_PARAMS = {
+export const RANGE_PARAMS = {
     dimensionInputs: { minVal: 0, maxVal: Infinity, stepVal: 1 },
     tx: translateInputs,
     ty: translateInputs,
@@ -76,7 +78,7 @@ const RANGE_PARAMS = {
     gamma: RANGES[60],
 }
 
-const GAIT_RANGE_PARAMS = {
+export const GAIT_RANGE_PARAMS = {
     tx: { minVal: -0.25, maxVal: 0.25, stepVal: 0.01, defaultVal: 0 },
     tz: { minVal: -0.5, maxVal: 0.5, stepVal: 0.01, defaultVal: -0.1 },
     rx: { minVal: -15, maxVal: 15, stepVal: 0.5, defaultVal: 0 },
@@ -91,7 +93,7 @@ const GAIT_RANGE_PARAMS = {
  * ICONS
  *************/
 
-const ICON_COMPONENTS = {
+export const ICON_COMPONENTS = {
     mug: <GiCoffeeMug className="vertical-align" />,
     circle: <GrStatusGoodSmall className="small-icon" />,
     square: <FaSquare className="small-icon" />,
@@ -105,7 +107,7 @@ const ICON_COMPONENTS = {
  * NAVIGATION
  *************/
 
-const PATHS = {
+export const PATHS = {
     inverseKinematics: {
         path: PATH_NAMES.inverseKinematics,
         description: SECTION_NAMES.inverseKinematics,
@@ -134,14 +136,14 @@ const PATHS = {
     },
 }
 
-const REPO_LINK_PROPERTIES = {
+export const REPO_LINK_PROPERTIES = {
     name: "REPO",
     icon: ICON_COMPONENTS.octocat,
     description: "Source Code",
     url: "https://github.com/alex-pyasetskiy/react-hexapod-simulator",
 }
 
-const PATH_LINKS = [
+export const PATH_LINKS = [
     PATHS.inverseKinematics,
     PATHS.forwardKinematics,
     PATHS.legPatterns,
@@ -149,27 +151,10 @@ const PATH_LINKS = [
     PATHS.landingPage,
 ]
 
-const URL_LINKS = [REPO_LINK_PROPERTIES]
+export const URL_LINKS = [REPO_LINK_PROPERTIES]
 
 /*************
  * LANDING PAGE
  *************/
 
-const LANDING_PAGE_MESSAGE = `# Hexapod Robot Simulator`
-
-export {
-    ICON_COMPONENTS,
-    LANDING_PAGE_MESSAGE,
-    SECTION_NAMES,
-    ANGLE_NAMES,
-    DIMENSION_NAMES,
-    LEG_NAMES,
-    IK_SLIDERS_LABELS,
-    GAIT_SLIDER_LABELS,
-    RESET_LABEL,
-    PATHS,
-    URL_LINKS,
-    PATH_LINKS,
-    RANGE_PARAMS,
-    GAIT_RANGE_PARAMS,
-}
+export const LANDING_PAGE_MESSAGE = `# Hexapod Robot Simulator`

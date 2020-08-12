@@ -1,13 +1,13 @@
 import React, { Component } from "react"
 import { sliderList, Card, ResetButton, ToggleSwitch } from "../generic"
-import { SECTION_NAMES, GAIT_SLIDER_LABELS, GAIT_RANGE_PARAMS } from "../vars"
+import { SECTION_NAMES, GAIT_SLIDER_LABELS, GAIT_RANGE_PARAMS, BOARD_SOCKET } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import PoseTable from "./PoseTable"
 import { VirtualHexapod, controllerCMD } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS } from "../../configs"
 
-const ws = new WebSocket('ws://hexabot.node:4000/')
+const ws = new WebSocket(BOARD_SOCKET)
 
 const ANIMATION_DELAY = 150
 
