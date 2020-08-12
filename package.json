@@ -12,7 +12,6 @@
         "dotenv": "^8.2.0",
         "express": "^4.15.2",
         "jest-canvas-mock": "^2.2.0",
-        "joystick-logitech-f710": "^0.3.1",
         "plotly.js": "^1.54.6",
         "plotly.js-gl3d-dist-min": "^1.54.2",
         "react": "^16.13.1",
@@ -22,7 +21,6 @@
         "react-plotly.js": "^2.4.0",
         "react-router-dom": "^5.2.0",
         "react-scripts": "3.4.1",
-        "react-step-range-slider": "^1.4.1",
         "serialport": "^9.0.0",
         "socket.io-client": "^2.3.0",
         "source-map-explorer": "^2.4.2",
@@ -31,11 +29,12 @@
     },
     "scripts": {
         "analyze": "source-map-explorer 'build/static/js/*.js'",
-        "start": "react-scripts start",
+        "start": "concurrently \"npm run server\" \"npm run client\"",
         "build": "react-scripts build",
-        "gamepad": "sudo node src/gamepad.js nodeamon",
         "eject": "react-scripts eject",
-        "deploy": "gh-pages -d build"
+        "deploy": "gh-pages -d build",
+        "client": "node start-client.js",
+        "server": "node server.js"
     },
     "eslintConfig": {
         "extends": "react-app"
@@ -54,6 +53,8 @@
     },
     "devDependencies": {
         "gh-pages": "^3.1.0",
-        "prettier": "2.0.5"
+        "prettier": "2.0.5",
+        "react-scripts": "3.4.1",
+        "concurrently": "3.1.0"
     }
 }
