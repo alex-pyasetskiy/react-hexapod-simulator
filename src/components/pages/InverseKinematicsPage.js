@@ -69,21 +69,25 @@ class InverseKinematicsPage extends Component {
         })
     }
 
-    get additionalInfo() {
+    get alertInfo() {
         if (this.state.errorMessage) {
             return <AlertBox info={this.state.errorMessage} />
         }
-
-        return <PoseTable pose={this.props.params.pose} />
+        return ''
     }
 
     render = () => (
-        <Card title={<h2>{this.pageName}</h2>}>
-            <div className="grid-cols-3">{this.sliders.slice(0, 6)}</div>
-            <div className="grid-cols-2">{this.sliders.slice(6, 8)}</div>
+        <div className="grid-cotainer">
+            <h2>{this.pageName}</h2>
+                {this.alertInfo}
+                <div className="grid-cols-2">
+                    <div className="grid-cols-1">
+                        {this.sliders}
+                    </div>
+                    <PoseTable pose={this.props.params.pose} />
+                </div>
             <ResetButton reset={this.reset} />
-            {this.additionalInfo}
-        </Card>
+        </div>
     )
 }
 
