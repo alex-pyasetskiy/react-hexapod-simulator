@@ -1,7 +1,10 @@
 const WebSocket = require('ws');
 const SerialPort = require("serialport");
 const fs = require('fs');
-const wss = new WebSocket.Server({ port: 4000 });
+const dotenv = require('dotenv');
+dotenv.config();
+
+const wss = new WebSocket.Server({ host: process.env.NODE_HOST, port: process.env.NODE_BOARD_SOCKET });
 
 
 var controller;
@@ -38,10 +41,8 @@ function log(msg) {
 }
 
 wss.on('connection', function connection(ws, req) {
-    // controller.write('#1P1500#2P1500#3P1500#5P1500#6P1500#7P1500#9P1500#10P1500#11P1500#21P1500#22P1500#23P1500#25P1500#26P1500#27P1500#30P1500#31P1500#32P1500T100D500\r\n');
     log(`Connected on port ${wss.port}`)
     ws.on('message', function incoming(message) {
-        // console.log('received: %s', message);
         const buf = Buffer.from(`${message}\r\n`)
         controller.write(buf.toString('ascii'));
         log(`Receive CMD=${buf.toString('ascii')}`);

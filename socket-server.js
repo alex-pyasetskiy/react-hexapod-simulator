@@ -1,16 +1,29 @@
-const webSocketsServerPort = 4000;
 const webSocketServer = require('websocket').server;
 const http = require('http');
+const HID = require('node-hid');
+const dotenv = require('dotenv');
 
-var HID = require('node-hid');
+dotenv.config();
+
 HID.setDriverType('lsusb');
 
-var device = new HID.HID(1133, 49695);
+const device_info = HID.devices().filter(function (i) {
+  return i.productId === 49695 && i.vendorId === 1133;
+})[0]
 
+if (!device_info) {
+  throw Error("Logitech Gamepad not Connected!")
+}
+console.log(device_info)
 
-// Spinning the http server and the websocket server.
+const device = new HID.HID(device_info.vendorId, device_info.productId);
+
 const server = http.createServer();
-server.listen(webSocketsServerPort);
+
+server.listen(process.env.NODE_CONTROLLER_SOCKET, process.env.NODE_HOST, () => {
+  console.log(`Server running at http://${process.env.NODE_HOST}:${process.env.NODE_CONTROLLER_SOCKET}/`);
+});
+
 const wsServer = new webSocketServer({
   httpServer: server
 });
@@ -19,15 +32,15 @@ var clients = {};
 
 const getUniqueID = () => {
   const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-  return s4() + s4() + '-' + s4();
+  return `${s4() + s4()}-${s4()}`;
 };
 
 const sendMessage = (json) => {
   Object.keys(clients).map((client) => {
     clients[client].sendUTF(json);
+    return true
   });
 }
-
 
 wsServer.on('request', function (request) {
   var userID = getUniqueID();
