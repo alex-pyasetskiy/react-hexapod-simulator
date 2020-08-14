@@ -13,7 +13,7 @@ import style from './WaklingGaitsPage.module.scss'
 // const client = new W3CWebSocket('ws://127.0.0.1:4000');
 const ws = new WebSocket(BOARD_SOCKET)
 
-const ANIMATION_DELAY = 150
+const ANIMATION_DELAY = 120
 
 const getPose = (sequences, i) => {
     return Object.keys(sequences).reduce((newSequences, legPosition) => {
@@ -52,7 +52,61 @@ class WalkingGaitsPage extends Component {
         showGaitWidgets: true,
         animationCount: 1,
         sequence: {},
-        socketClient: null
+        socketClient: null,
+        startState: false,
+        gamepad: {},
+        pushStart: 0,
+        pushEnd: 0,
+    }
+
+    async handleArrows (btnState) {
+        switch(parseInt(btnState)) {
+            case 0:
+                
+                this.toggleAnimating()
+                this.setState({isForward:true})
+                this.setState({inWalkMode:true})
+                break;
+            case 1:
+                //up
+                this.setState({isForward:true})
+                this.toggleAnimating()
+                break;
+            case 2:
+                //down
+                this.setState({isForward:false})
+                this.toggleAnimating()
+                break;
+            case 4:
+                this.setState({isForward:true})
+                this.setState({inWalkMode:false})
+                this.toggleAnimating()
+                break;
+            case 8:
+                //rotate right
+                this.setState({inWalkMode:false})
+                this.setState({isForward:false})
+                this.toggleAnimating()
+                break;
+                
+            default:
+                console.log("arrows default")
+        }
+    }
+
+    async handleStartBack (btnState) {
+        switch(parseInt(btnState)) {
+            case 0:
+                break;
+            case 1:
+                // start pushed
+                break;
+            case 2:
+                //back pushed
+                break;
+            default:
+                // do nothing
+        }
     }
 
     componentDidMount = () => {
@@ -74,7 +128,9 @@ class WalkingGaitsPage extends Component {
         };
 
         client.onmessage = (message) => {
-            console.log(message);
+            let event = JSON.parse(message.data)
+            this.handleArrows(event.arrows)
+            this.handleStartBack(event.fn)
         };
     }
 
