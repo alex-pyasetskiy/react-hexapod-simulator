@@ -35,7 +35,7 @@
 #### 2. Install required dependencies
 
 ```bash
-$ sudo apt-get install build-essential git gcc-4.8 g++-4.8 && export CXX=g++-4.8 libusb-1.0-0 libusb-1.0-0-dev libudev-dev i2c-tools
+$ sudo apt-get install build-essential git gcc-4.8 g++-4.8 && export CXX=g++-4.8 libusb-1.0-0 libusb-1.0-0-dev libudev-dev i2c-tools libhidapi-hidraw0
 ```
 
 #### 3. Install nvm
