@@ -83,7 +83,7 @@ export const GAIT_RANGE_PARAMS = {
     tz: { minVal: -0.5, maxVal: 0.5, stepVal: 0.01, defaultVal: -0.1 },
     rx: { minVal: -15, maxVal: 15, stepVal: 0.5, defaultVal: 0 },
     ry: { minVal: -15, maxVal: 15, stepVal: 0.5, defaultVal: 0 },
-    legStance: { minVal: -50, maxVal: 50, stepVal: 1, defaultVal: -25 },
+    legStance: { minVal: -80, maxVal: 40, stepVal: 1, defaultVal: -25 },
     hipStance: { minVal: 0, maxVal: 40, stepVal: 1, defaultVal: 20 },
     hipSwing: { minVal: 10, maxVal: 40, stepVal: 1, defaultVal: 15 },
     liftSwing: { minVal: 10, maxVal: 70, stepVal: 1, defaultVal: 40 },

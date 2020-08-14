@@ -335,6 +335,12 @@ input[type="number"] {
     border: 0;
 }
 
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .switch-container {
     cursor: pointer;
     display: flex;

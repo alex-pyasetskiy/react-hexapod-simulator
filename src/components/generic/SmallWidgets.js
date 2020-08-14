@@ -11,8 +11,8 @@ const AlertBox = ({ info }) => (
     </div>
 )
 
-const ToggleSwitch = ({ id, value, handleChange, showValue }) => (
-    <div className="switch-container">
+const ToggleSwitch = ({ className, id, value, handleChange, showValue }) => (
+    <div className={className ? className : "switch-container"}>
         <label className="label" htmlFor={id}>
             {showValue ? value : null}
         </label>

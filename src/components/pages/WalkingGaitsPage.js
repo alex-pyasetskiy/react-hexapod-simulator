@@ -1,3 +1,4 @@
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 import React, { Component } from "react"
 import { sliderList, Card, ResetButton, ToggleSwitch } from "../generic"
 import { SECTION_NAMES, GAIT_SLIDER_LABELS, GAIT_RANGE_PARAMS, BOARD_SOCKET } from "../vars"
@@ -7,7 +8,10 @@ import { VirtualHexapod, controllerCMD } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS } from "../../configs"
 
-const ws = new WebSocket(BOARD_SOCKET)
+import style from './WaklingGaitsPage.module.scss'
+
+// const client = new W3CWebSocket('ws://127.0.0.1:4000');
+// const ws = new WebSocket(BOARD_SOCKET)
 
 const ANIMATION_DELAY = 150
 
@@ -20,16 +24,17 @@ const getPose = (sequences, i) => {
 }
 
 const newSwitch = (id, value, handleChange) => (
-    <ToggleSwitch id={id} handleChange={handleChange} value={value} showValue={true} />
+    <ToggleSwitch className={style.toggleSwitch} id={id} handleChange={handleChange} value={value} showValue={true} />
 )
 
-const switches = (switch1, switch2, switch3) => (
-    <div className="grid-cols-3" style={{ paddingBottom: "20px" }}>
-        {switch1}
-        {switch2}
-        {switch3}
-    </div>
-)
+// const switches = (switch1, switch2, switch3) => (
+//     // <div className="grid-cols-1" style={{ paddingBottom: "20px" }}>
+//     <div className="switch-container">
+//         {switch1}
+//         {switch2}
+//         {switch3}
+//     </div>
+// )
 
 const countSteps = sequence => sequence["leftMiddle"].alpha.length
 
@@ -47,20 +52,24 @@ class WalkingGaitsPage extends Component {
         showGaitWidgets: true,
         animationCount: 1,
         sequence: {},
+        socketClient: null
     }
 
     componentDidMount = () => {
         this.props.onMount(this.pageName)
         const { isTripodGait, inWalkMode } = this.state
         this.setWalkSequence(DEFAULT_GAIT_PARAMS, isTripodGait, inWalkMode)
-        
-        // init servo socket client
-        ws.onopen = () => {
-            console.log('servo controller connected')
-        }
-        ws.onclose = () => {
-            console.log('servo controller disconnected')
-        }
+
+        const client = new W3CWebSocket('ws://127.0.0.1:4000');
+
+        client.onopen = () => {
+            console.log('WebSocket Client Connected');
+            this.setState({ socketClient: client });
+        };
+
+        client.onmessage = (message) => {
+            console.log(message);
+        };
     }
 
     componentWillUnmount = () => {
@@ -79,7 +88,7 @@ class WalkingGaitsPage extends Component {
 
         const pose = getPose(this.walkSequence, step)
         let controller_cmd = controllerCMD(pose).join("")
-        ws.send(JSON.stringify(controller_cmd))
+        // ws.send(JSON.stringify(controller_cmd))
         if (inWalkMode) {
             this.onUpdate(pose, this.currentTwist)
             return
@@ -195,7 +204,11 @@ class WalkingGaitsPage extends Component {
             handleChange: this.updateGaitParams,
         })
 
-        return <div className="grid-cols-2">{sliders}</div>
+        return (
+            <div className="grid-cols-3">
+                {sliders}
+            </div>
+        )
     }
 
     get animationCount() {
@@ -207,34 +220,41 @@ class WalkingGaitsPage extends Component {
         )
     }
 
+    get connectionState() {
+        const { socketClient } = this.state
+        let connection = socketClient ? 'Connected' : 'Not connected'
+        return <div className={style.connectionInfo}>{connection}</div>
+    }
+
     render() {
-        const animationControlSwitches = switches(
-            this.animatingSwitch,
-            this.widgetsSwitch
-        )
-        const gaitControlSwitches = switches(
-            this.gaitTypeSwitch,
-            this.directionSwitch,
-            this.rotateSwitch
-        )
 
         const { showGaitWidgets } = this.state
         const { pose } = this.props.params
 
         return (
-            <Card title={<h2>{this.pageName}</h2>} other={this.animationCount}>
-                {animationControlSwitches}
+            <div className={style.wrapper}>
+                <div className={style.pageHeader}>
+                    {/* {this.animationCount} */}
+                    {this.connectionState}
+                    {this.animatingSwitch}
+                    {this.gaitTypeSwitch}
+                    {this.directionSwitch}
+                    {this.rotateSwitch}
+                </div>
+                <div className={style.sliders}>
+                    {this.sliders}
+                    <PoseTable pose={pose} />
+                </div>
 
-                <div hidden={!showGaitWidgets}>
-                    {gaitControlSwitches}
+                {/* <div hidden={!showGaitWidgets}>
                     {this.sliders}
                     <ResetButton reset={this.reset} />
-                </div>
+                </div> */}
 
                 <div hidden={showGaitWidgets}>
                     <PoseTable pose={pose} />
                 </div>
-            </Card>
+            </div>
         )
     }
 }

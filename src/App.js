@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as configs from "./configs"
@@ -158,10 +158,10 @@ class App extends React.Component {
         <Router>
             <Nav />
             <div className="main content">
-                <div className="controls page-content">
+                {/* <div className="controls page-content"> */}
                     {/* {this.dimensions()} */}
                     {this.page()}
-                </div>
+                {/* </div> */}
                 {this.hexapodPlot()}
             </div>
         </Router>

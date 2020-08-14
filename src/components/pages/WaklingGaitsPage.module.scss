@@ -1,0 +1,33 @@
+:local {
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+
+        .connectionInfo {
+            font-size: 5em;
+        }
+
+        .pageHeader {
+            display: inline-flex;
+            justify-content: flex-start;
+            // font-size: 3em;
+        }
+        .controls {
+            display: inline-flex;
+        }
+
+        .sliders {
+            display: flex;
+            margin-top: 30px;
+        }
+
+        .toggleSwitch {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            min-height: 35px;
+            margin-left: 60px
+        }
+    }
+}
