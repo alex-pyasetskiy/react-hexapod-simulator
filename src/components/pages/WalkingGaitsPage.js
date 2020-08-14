@@ -11,7 +11,7 @@ import { DEFAULT_GAIT_PARAMS } from "../../configs"
 import style from './WaklingGaitsPage.module.scss'
 
 // const client = new W3CWebSocket('ws://127.0.0.1:4000');
-// const ws = new WebSocket(BOARD_SOCKET)
+const ws = new WebSocket(BOARD_SOCKET)
 
 const ANIMATION_DELAY = 150
 
@@ -60,8 +60,14 @@ class WalkingGaitsPage extends Component {
         const { isTripodGait, inWalkMode } = this.state
         this.setWalkSequence(DEFAULT_GAIT_PARAMS, isTripodGait, inWalkMode)
 
-        const client = new W3CWebSocket('ws://127.0.0.1:4000');
+        ws.onopen = () => {
+            console.log('servo controller connected')
+        }
+        ws.onclose = () => {
+            console.log('servo controller disconnected')
+        }
 
+        const client = new W3CWebSocket('ws://127.0.0.1:4000');
         client.onopen = () => {
             console.log('WebSocket Client Connected');
             this.setState({ socketClient: client });
@@ -88,7 +94,7 @@ class WalkingGaitsPage extends Component {
 
         const pose = getPose(this.walkSequence, step)
         let controller_cmd = controllerCMD(pose).join("")
-        // ws.send(JSON.stringify(controller_cmd))
+        ws.send(JSON.stringify(controller_cmd))
         if (inWalkMode) {
             this.onUpdate(pose, this.currentTwist)
             return
