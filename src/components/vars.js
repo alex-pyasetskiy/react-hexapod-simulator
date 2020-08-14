@@ -3,7 +3,7 @@ import { GiCoffeeMug } from "react-icons/gi"
 import { FaGithubAlt, FaTimes, FaCheck, FaHome, FaSquare } from "react-icons/fa"
 import { GrStatusGoodSmall } from "react-icons/gr"
 
-export const BOARD_SOCKET = 'ws://localhost:4000/'
+export const BOARD_SOCKET = 'ws://192.168.31.2:4001/'
 
 export const SECTION_NAMES = {
     dimensions: "Dimensions",

@@ -1,6 +1,6 @@
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 import React, { Component } from "react"
-import { sliderList, Card, ResetButton, ToggleSwitch } from "../generic"
+import { sliderList, ToggleSwitch } from "../generic"
 import { SECTION_NAMES, GAIT_SLIDER_LABELS, GAIT_RANGE_PARAMS, BOARD_SOCKET } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import PoseTable from "./PoseTable"
@@ -10,7 +10,6 @@ import { DEFAULT_GAIT_PARAMS } from "../../configs"
 
 import style from './WaklingGaitsPage.module.scss'
 
-// const client = new W3CWebSocket('ws://127.0.0.1:4000');
 const ws = new WebSocket(BOARD_SOCKET)
 
 const ANIMATION_DELAY = 120
@@ -26,15 +25,6 @@ const getPose = (sequences, i) => {
 const newSwitch = (id, value, handleChange) => (
     <ToggleSwitch className={style.toggleSwitch} id={id} handleChange={handleChange} value={value} showValue={true} />
 )
-
-// const switches = (switch1, switch2, switch3) => (
-//     // <div className="grid-cols-1" style={{ paddingBottom: "20px" }}>
-//     <div className="switch-container">
-//         {switch1}
-//         {switch2}
-//         {switch3}
-//     </div>
-// )
 
 const countSteps = sequence => sequence["leftMiddle"].alpha.length
 
@@ -296,7 +286,6 @@ class WalkingGaitsPage extends Component {
         return (
             <div className={style.wrapper}>
                 <div className={style.pageHeader}>
-                    {/* {this.animationCount} */}
                     {this.connectionState}
                     {this.animatingSwitch}
                     {this.gaitTypeSwitch}
@@ -307,11 +296,6 @@ class WalkingGaitsPage extends Component {
                     {this.sliders}
                     <PoseTable pose={pose} />
                 </div>
-
-                {/* <div hidden={!showGaitWidgets}>
-                    {this.sliders}
-                    <ResetButton reset={this.reset} />
-                </div> */}
 
                 <div hidden={showGaitWidgets}>
                     <PoseTable pose={pose} />
