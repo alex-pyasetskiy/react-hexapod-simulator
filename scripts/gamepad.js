@@ -1,22 +1,10 @@
 const webSocketServer = require('websocket').server;
 const http = require('http');
-const HID = require('node-hid');
 const dotenv = require('dotenv');
+const { exec } = require('child_process');
+const Joystick = require("joystick-logitech-f710");
 
 dotenv.config();
-
-HID.setDriverType('lsusb');
-
-const device_info = HID.devices().filter(function (i) {
-  return i.productId === 49695 && i.vendorId === 1133;
-})[0]
-
-if (!device_info) {
-  throw Error("Logitech Gamepad not Connected!")
-}
-console.log(device_info)
-
-const device = new HID.HID(device_info.vendorId, device_info.productId);
 
 const server = http.createServer();
 
@@ -58,22 +46,19 @@ wsServer.on('request', function (request) {
   });
 });
 
-device.on("data", function (data) {
-  var hex = data.toString('hex');
-  var parsed_data = {
-    hex: `${data.toString('hex')}`,
-    fn: `${parseInt(hex[4], 16)}`,
-    arrows: `${parseInt(hex[5], 16)}`,
-    actions: `${parseInt(hex[6], 16)}`,
-    home: `${parseInt(hex[7], 16)}`,
-    lt: `${parseInt(hex.slice(8, 9), 16)}`,
-    lb: `${parseInt(hex.slice(10, 11), 16)}`,
-    axis_left_x: `${parseInt(hex.slice(12,16), 16)}`,
-    axis_left_y: `${parseInt(hex.slice(16,20), 16)}`,
-    axis_right_x: `${parseInt(hex.slice(20,24), 16)}`,
-    axis_right_y: `${parseInt(hex.slice(24,28), 16)}`
-  };
+Joystick.create("/dev/input/js0", function (err, joystick) {
+  if (err) {
+    throw err;
+  }
+  joystick.setMaximumAxesPosition(100);
+  console.log(`F710 Gamepad Connected! ${JSON.stringify(joystick)}`)
 
-  console.log(parsed_data);
-  sendMessage(JSON.stringify(parsed_data))
+  joystick.on("button:a:press", function () {
+    console.log("jump");
+  });
+
+  joystick.on("button:b:press", function () {
+    console.log("fire");
+  });
 });
+
