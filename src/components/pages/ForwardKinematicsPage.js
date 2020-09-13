@@ -6,7 +6,6 @@ import { DEFAULT_POSE } from "../../configs"
 import { SECTION_NAMES, LEG_NAMES, BOARD_SOCKET } from "../vars"
 import { controllerCMD } from "../../hexapod"
 
-
 const ws = new WebSocket(BOARD_SOCKET)
 
 class ForwardKinematicsPage extends Component {
@@ -17,26 +16,25 @@ class ForwardKinematicsPage extends Component {
         this.props.onMount(this.pageName)
         ws.onopen = () => {
             // on connecting, do nothing but log it to the console
-            console.log('connected')
+            console.log("connected")
         }
-        
+
         ws.onmessage = evt => {
             // on receiving a message, add it to the list of messages
             // const message = JSON.parse(evt.data)
         }
-        
+
         ws.onclose = () => {
-            console.log('disconnected')
+            console.log("disconnected")
             // automatically try to reconnect on connection loss
         }
-        
     }
 
     reset = () => this.props.onUpdate(DEFAULT_POSE)
 
     updatePose = (name, angle, value) => {
         const pose = this.props.params.pose
-        
+
         const newPose = {
             ...pose,
             [name]: { ...pose[name], [angle]: value },
@@ -45,7 +43,7 @@ class ForwardKinematicsPage extends Component {
         let controller_cmd = controllerCMD(newPose).join("")
         ws.send(JSON.stringify(controller_cmd))
 
-        console.log(this.toServo(newPose))      
+        console.log(this.toServo(newPose))
 
         this.props.onUpdate(newPose)
     }

@@ -58,10 +58,11 @@ const getWalkSequence = (
             ? getHipSwingRotate(aHipSwing)
             : getHipSwingForward(aHipSwing)
 
-    const sequence = gaitType === "ripple"
-        ? rippleSequence(ikSolver.pose, aLiftSwing, hipSwings, stepCount)
-        : tripodSequence(ikSolver.pose, aLiftSwing, hipSwings, stepCount)
-    console.log(sequence);
+    const sequence =
+        gaitType === "ripple"
+            ? rippleSequence(ikSolver.pose, aLiftSwing, hipSwings, stepCount)
+            : tripodSequence(ikSolver.pose, aLiftSwing, hipSwings, stepCount)
+    console.log(sequence)
     return sequence
 }
 

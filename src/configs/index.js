@@ -7,7 +7,7 @@ import {
     DEFAULT_IK_PARAMS,
     DEFAULT_GAIT_PARAMS,
     DEFAULT_SERVO_POSE_VALUE,
-    SERVO_LINK_PINS
+    SERVO_LINK_PINS,
 } from "./hexapodParams"
 
 import { DATA, LAYOUT, DATA_INDEX_MAP, SCENE, CAMERA_VIEW } from "./plotParams"
@@ -26,5 +26,5 @@ export {
     SCENE,
     CAMERA_VIEW,
     DEFAULT_SERVO_POSE_VALUE,
-    SERVO_LINK_PINS
+    SERVO_LINK_PINS,
 }

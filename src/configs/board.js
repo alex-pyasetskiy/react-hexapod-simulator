@@ -4,12 +4,11 @@ const SERVO_LINK_PINS = {
     leftFront: { alpha: 1, beta: 2, gamma: 3 },
     leftMiddle: { alpha: 5, beta: 6, gamma: 7 },
     leftBack: { alpha: 9, beta: 10, gamma: 11 },
-    
+
     rightFront: { alpha: 30, beta: 31, gamma: 32 },
     rightMiddle: { alpha: 25, beta: 26, gamma: 27 },
-    rightBack: { alpha: 21, beta: 22, gamma: 23 }
+    rightBack: { alpha: 21, beta: 22, gamma: 23 },
 }
-
 
 // {
 //         1: this.translate(leftFront.alpha, DEFAULT_SERVO_POSE_VALUE.leftFront.alpha, false),

@@ -28,13 +28,15 @@
         "serialport": "^9.0.0",
         "source-map-explorer": "^2.4.2",
         "typescript": "^3.9.6",
-        "websocket": "^1.0.31"
+        "websocket": "^1.0.31",
+        "prettier": "2.0.5"
     },
     "scripts": {
         "analyze": "source-map-explorer 'build/static/js/*.js'",
-        "start": "react-scripts start",
+        "start": "PORT=4100 react-scripts start",
         "build": "react-scripts build",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "startBoard": "node scripts/servoBoard.js"
     },
     "eslintConfig": {
         "extends": "react-app"

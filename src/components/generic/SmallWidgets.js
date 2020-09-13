@@ -20,7 +20,6 @@ const ToggleSwitch = ({ className, id, value, handleChange, showValue }) => (
             <input id={id} type="checkbox" value={value} onChange={handleChange} />
             <span className="toggle-switch-widget round"></span>
         </label>
-        
     </div>
 )
 

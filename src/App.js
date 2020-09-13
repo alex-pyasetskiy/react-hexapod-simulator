@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as configs from "./configs"
@@ -11,7 +11,6 @@ import {
     LegPatternPage,
     WalkingGaitsPage,
 } from "./components/pages"
-
 
 class App extends React.Component {
     plot = {
@@ -141,7 +140,7 @@ class App extends React.Component {
         <Switch>
             <Route path="/" exact component={this.pageLanding} />
             <Route path={PATHS.legPatterns.path} exact component={this.pagePatterns} />
-            <Route path={PATHS.forwardKinematics.path} exact component={this.pageFk} />
+            {/* <Route path={PATHS.forwardKinematics.path} exact component={this.pageFk} /> */}
             <Route path={PATHS.inverseKinematics.path} exact component={this.pageIk} />
             <Route path={PATHS.walkingGaits.path} exact component={this.pageWalking} />
             <Route>
@@ -159,8 +158,8 @@ class App extends React.Component {
             <Nav />
             <div className="main content">
                 {/* <div className="controls page-content"> */}
-                    {/* {this.dimensions()} */}
-                    {this.page()}
+                {/* {this.dimensions()} */}
+                {this.page()}
                 {/* </div> */}
                 {this.hexapodPlot()}
             </div>
