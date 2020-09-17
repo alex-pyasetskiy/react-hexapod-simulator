@@ -1,0 +1,31 @@
+#
+# USB ID 046d:c218 Logitech, Inc. F510 Gamepad [DirectInput Mode]
+#
+[xboxdrv]
+evdev = /dev/input/by-id/usb-Logitech_Wireless_Gamepad_F710_89CA9F99-event-joystick
+silent=true
+dpad-as-button=true
+
+# Raw controller inputs on the left map to the xbox equivalent on the right.
+
+[axismap]
+-Y1 = Y1
+-Y2 = Y2
+
+[evdev-absmap]
+ABS_X = X1
+ABS_Y = Y1
+ABS_RX = X2
+ABS_RY = Y2
+ABS_HAT0X = DPAD_X
+ABS_HAT0Y = DPAD_Y
+BTN_SOUTH = A
+BTN_EAST = B
+BTN_NORTH = X
+BTN_WEST = Y
+BTN_TL = LB
+BTN_TR = RB
+ABS_Z = LT
+ABS_RZ = RT
+BTN_SELECT = BACK
+BTN_START = START
