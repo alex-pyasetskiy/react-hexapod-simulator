@@ -1,18 +1,23 @@
-import { w3cwebsocket as W3CWebSocket } from "websocket";
+import { w3cwebsocket as W3CWebSocket } from "websocket"
 import React, { Component } from "react"
 import { sliderList, ToggleSwitch } from "../generic"
-import { SECTION_NAMES, GAIT_SLIDER_LABELS, GAIT_RANGE_PARAMS, BOARD_SOCKET } from "../vars"
+import {
+    SECTION_NAMES,
+    GAIT_SLIDER_LABELS,
+    GAIT_RANGE_PARAMS,
+    BOARD_SOCKET,
+} from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import PoseTable from "./PoseTable"
 import { VirtualHexapod, controllerCMD } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS } from "../../configs"
 
-import style from './WaklingGaitsPage.module.scss'
+import style from "./WaklingGaitsPage.module.scss"
 
-const ws = new WebSocket(BOARD_SOCKET)
+const ws = new WebSocket(BOARD_SOCKET, ["arduino"])
 
-const ANIMATION_DELAY = 120
+const ANIMATION_DELAY = 150
 
 const getPose = (sequences, i) => {
     return Object.keys(sequences).reduce((newSequences, legPosition) => {
@@ -23,7 +28,13 @@ const getPose = (sequences, i) => {
 }
 
 const newSwitch = (id, value, handleChange) => (
-    <ToggleSwitch className={style.toggleSwitch} id={id} handleChange={handleChange} value={value} showValue={true} />
+    <ToggleSwitch
+        className={style.toggleSwitch}
+        id={id}
+        handleChange={handleChange}
+        value={value}
+        showValue={true}
+    />
 )
 
 const countSteps = sequence => sequence["leftMiddle"].alpha.length
@@ -44,59 +55,8 @@ class WalkingGaitsPage extends Component {
         sequence: {},
         socketClient: null,
         startState: false,
-        gamepad: {},
         pushStart: 0,
         pushEnd: 0,
-    }
-
-    async handleArrows (btnState) {
-        switch(parseInt(btnState)) {
-            case 0:
-                
-                this.toggleAnimating()
-                this.setState({isForward:true})
-                this.setState({inWalkMode:true})
-                break;
-            case 1:
-                //up
-                this.setState({isForward:true})
-                this.toggleAnimating()
-                break;
-            case 2:
-                //down
-                this.setState({isForward:false})
-                this.toggleAnimating()
-                break;
-            case 4:
-                this.setState({isForward:true})
-                this.setState({inWalkMode:false})
-                this.toggleAnimating()
-                break;
-            case 8:
-                //rotate right
-                this.setState({inWalkMode:false})
-                this.setState({isForward:false})
-                this.toggleAnimating()
-                break;
-                
-            default:
-                console.log("arrows default")
-        }
-    }
-
-    async handleStartBack (btnState) {
-        switch(parseInt(btnState)) {
-            case 0:
-                break;
-            case 1:
-                // start pushed
-                break;
-            case 2:
-                //back pushed
-                break;
-            default:
-                // do nothing
-        }
     }
 
     componentDidMount = () => {
@@ -105,23 +65,15 @@ class WalkingGaitsPage extends Component {
         this.setWalkSequence(DEFAULT_GAIT_PARAMS, isTripodGait, inWalkMode)
 
         ws.onopen = () => {
-            console.log('servo controller connected')
+            console.log("servo controller connected")
+            ws.send(1)
+            this.setState({ socketClient: ws })
+
         }
         ws.onclose = () => {
-            console.log('servo controller disconnected')
+            console.log("servo controller disconnected")
+            ws.send(0)
         }
-
-        const client = new W3CWebSocket('ws://127.0.0.1:4000');
-        client.onopen = () => {
-            console.log('WebSocket Client Connected');
-            this.setState({ socketClient: client });
-        };
-
-        client.onmessage = (message) => {
-            let event = JSON.parse(message.data)
-            this.handleArrows(event.arrows)
-            this.handleStartBack(event.fn)
-        };
     }
 
     componentWillUnmount = () => {
@@ -137,9 +89,12 @@ class WalkingGaitsPage extends Component {
 
         const tempStep = isForward ? animationCount : stepCount - animationCount
         const step = Math.max(0, Math.min(stepCount - 1, tempStep))
-
+        console.log(step)
         const pose = getPose(this.walkSequence, step)
-        let controller_cmd = controllerCMD(pose).join("")
+        let controller_cmd = `${animationCount} ${controllerCMD(pose).join(
+            ""
+        )}`
+        
         ws.send(JSON.stringify(controller_cmd))
         if (inWalkMode) {
             this.onUpdate(pose, this.currentTwist)
@@ -215,11 +170,12 @@ class WalkingGaitsPage extends Component {
     toggleAnimating = () => {
         const isAnimating = !this.state.isAnimating
         this.setState({ isAnimating })
-
+        
         if (isAnimating) {
-            this.intervalID = setInterval(this.animate, ANIMATION_DELAY)
+            this.intervalID = setInterval(this.animate, this.state.animationDelay)
         } else {
             clearInterval(this.intervalID)
+            ws.send(JSON.stringify("STOPED"))
         }
     }
 
@@ -256,50 +212,54 @@ class WalkingGaitsPage extends Component {
             handleChange: this.updateGaitParams,
         })
 
-        return (
-            <div className="grid-cols-3">
-                {sliders}
-            </div>
-        )
+        return <div className="grid-cols-3">{sliders}</div>
     }
 
     get animationCount() {
-        const { isAnimating, animationCount } = this.state
-        return (
-            <div className="text" hidden={!isAnimating}>
-                {animationCount}
-            </div>
-        )
+        const { animationCount } = this.state
+        return <div className="text">{animationCount}</div>
     }
 
     get connectionState() {
         const { socketClient } = this.state
-        let connection = socketClient ? 'Connected' : 'Not connected'
-        return <div className={style.connectionInfo}>{connection}</div>
+        let connection = socketClient ? "Connected" : "Not connected"
+        return (
+            <div className={style.connectionInfo}>
+                {connection} {this.animationCount}
+            </div>
+        )
+    }
+
+    handleAnimationDelayChange = (event) => {
+        // if (event.key === "Enter") {
+        //     this.setState({animationDelay: event.value})
+        // }
+        console.log(event.target.value)
+        this.setState({animationDelay: event.value})
     }
 
     render() {
-
-        const { showGaitWidgets } = this.state
-        const { pose } = this.props.params
+        // const { showGaitWidgets } = this.state
+        // const { pose } = this.props.params
 
         return (
             <div className={style.wrapper}>
                 <div className={style.pageHeader}>
                     {this.connectionState}
+                    <input type="number" onBlur={this.handleAnimationDelayChange} />
+                </div>
+                <div className={style.sliders}>
+                    {this.sliders}
+                </div>
+                <div className={style.controls}>
                     {this.animatingSwitch}
                     {this.gaitTypeSwitch}
                     {this.directionSwitch}
                     {this.rotateSwitch}
-                </div>
-                <div className={style.sliders}>
-                    {this.sliders}
+                </div>        
+                {/* <div hidden={showGaitWidgets}>
                     <PoseTable pose={pose} />
-                </div>
-
-                <div hidden={showGaitWidgets}>
-                    <PoseTable pose={pose} />
-                </div>
+                </div> */}
             </div>
         )
     }

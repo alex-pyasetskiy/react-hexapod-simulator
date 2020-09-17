@@ -123,7 +123,6 @@ tr:hover {
     flex-grow: 1;
 }
 
-
 .plot {
     width: 95%;
     height: 450px;
@@ -347,14 +346,13 @@ input[type="number"] {
     flex-direction: column;
     justify-content: space-around;
     min-height: 35px;
-
 }
 
 /* The switch - the box around the slider */
 .switch {
     position: relative;
     display: inline-block;
-    width: 30px;
+    width: 40px;
     height: 17px;
     border: 1px rgb(46, 204, 113);
 }
@@ -383,8 +381,9 @@ input[type="number"] {
     background-color: #ef5777;
     -webkit-transition: 0.4s;
     transition: 0.4s;
-    width: 100px;
+    width: 50px;
     height: 30px;
+    /* margin-left: 50px; */
 }
 
 .toggle-switch-widget:before {
@@ -392,7 +391,7 @@ input[type="number"] {
     content: "";
     height: 80%;
     width: 35%;
-    left: 10px;
+    left: 5px;
     bottom: 2px;
     background-color: rgb(44, 62, 80);
     transition: 0.4s;

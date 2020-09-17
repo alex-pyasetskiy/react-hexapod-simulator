@@ -3,15 +3,15 @@ import { GiCoffeeMug } from "react-icons/gi"
 import { FaGithubAlt, FaTimes, FaCheck, FaHome, FaSquare } from "react-icons/fa"
 import { GrStatusGoodSmall } from "react-icons/gr"
 
-export const BOARD_SOCKET = 'ws://192.168.31.2:4001/'
+export const BOARD_SOCKET = "ws://192.168.31.147:81/"
 
 export const SECTION_NAMES = {
     dimensions: "Dimensions",
-    inverseKinematics: "Inverse Kinematics",
+    inverseKinematics: "IK",
     forwardKinematics: "Forward Kinematics",
-    legPatterns: "Leg Patterns",
+    legPatterns: "Patterns",
     landingPage: "Root",
-    walkingGaits: "Walking Gaits",
+    walkingGaits: "Walking",
 }
 
 export const PATH_NAMES = {
@@ -33,7 +33,16 @@ export const LEG_NAMES = [
     "rightBack",
 ]
 
-export const IK_SLIDERS_LABELS = ["tx", "ty", "tz", "rx", "ry", "rz", "hipStance", "legStance"]
+export const IK_SLIDERS_LABELS = [
+    "tx",
+    "ty",
+    "tz",
+    "rx",
+    "ry",
+    "rz",
+    "hipStance",
+    "legStance",
+]
 export const RESET_LABEL = "reset"
 
 export const GAIT_SLIDER_LABELS = [
@@ -45,7 +54,7 @@ export const GAIT_SLIDER_LABELS = [
     "tz",
     "rx",
     "ry",
-    "stepCount"
+    "stepCount",
 ]
 
 /*************
@@ -87,7 +96,7 @@ export const GAIT_RANGE_PARAMS = {
     hipStance: { minVal: 0, maxVal: 40, stepVal: 1, defaultVal: 20 },
     hipSwing: { minVal: 10, maxVal: 40, stepVal: 1, defaultVal: 15 },
     liftSwing: { minVal: 10, maxVal: 70, stepVal: 1, defaultVal: 40 },
-    stepCount: { minVal: 2, maxVal: 15, stepVal: 1, defaultVal: 2 }
+    stepCount: { minVal: 2, maxVal: 15, stepVal: 1, defaultVal: 2 },
 }
 /*************
  * ICONS
@@ -145,7 +154,7 @@ export const REPO_LINK_PROPERTIES = {
 
 export const PATH_LINKS = [
     PATHS.inverseKinematics,
-    PATHS.forwardKinematics,
+    // PATHS.forwardKinematics,
     PATHS.legPatterns,
     PATHS.walkingGaits,
     PATHS.landingPage,

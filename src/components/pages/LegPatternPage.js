@@ -1,9 +1,8 @@
 import React, { Component } from "react"
 import { sliderList, Card, ResetButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS } from "../../configs"
-import { SECTION_NAMES, ANGLE_NAMES, BOARD_SOCKET} from "../vars"
+import { SECTION_NAMES, ANGLE_NAMES, BOARD_SOCKET } from "../vars"
 import { controllerCMD } from "../../hexapod"
-
 
 const ws = new WebSocket(BOARD_SOCKET)
 class LegPatternPage extends Component {
@@ -13,10 +12,10 @@ class LegPatternPage extends Component {
     componentDidMount = () => {
         this.props.onMount(this.pageName)
         this.reset()
-        
+
         ws.onopen = () => {
             // on connecting, do nothing but log it to the console
-            console.log('connected')
+            console.log("connected")
         }
 
         ws.onmessage = evt => {
@@ -25,7 +24,7 @@ class LegPatternPage extends Component {
         }
 
         ws.onclose = () => {
-            console.log('disconnected')
+            console.log("disconnected")
             // automatically try to reconnect on connection loss
         }
     }
@@ -42,7 +41,7 @@ class LegPatternPage extends Component {
         for (const leg in DEFAULT_POSE) {
             newPose[leg] = patternParams
         }
-        
+
         let controller_cmd = controllerCMD(newPose).join("")
         ws.send(JSON.stringify(controller_cmd))
 

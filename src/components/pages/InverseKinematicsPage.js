@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { sliderList, Card, ResetButton, AlertBox } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
-import { SECTION_NAMES, IK_SLIDERS_LABELS , BOARD_SOCKET} from "../vars"
+import { SECTION_NAMES, IK_SLIDERS_LABELS, BOARD_SOCKET } from "../vars"
 import { DEFAULT_IK_PARAMS } from "../../configs"
 import { controllerCMD } from "../../hexapod"
 
@@ -14,10 +14,10 @@ class InverseKinematicsPage extends Component {
 
     componentDidMount = () => {
         this.props.onMount(this.pageName)
-        
+
         ws.onopen = () => {
             // on connecting, do nothing but log it to the console
-            console.log('connected')
+            console.log("connected")
         }
 
         ws.onmessage = evt => {
@@ -26,7 +26,7 @@ class InverseKinematicsPage extends Component {
         }
 
         ws.onclose = () => {
-            console.log('disconnected')
+            console.log("disconnected")
             // automatically try to reconnect on connection loss
         }
     }
@@ -38,7 +38,6 @@ class InverseKinematicsPage extends Component {
         )
         this.updateHexapodPlot(result.hexapod, DEFAULT_IK_PARAMS)
     }
-
 
     updateHexapodPlot = (hexapod, ikParams) => {
         this.setState({ ikParams, errorMessage: null })
@@ -73,19 +72,17 @@ class InverseKinematicsPage extends Component {
         if (this.state.errorMessage) {
             return <AlertBox info={this.state.errorMessage} />
         }
-        return ''
+        return ""
     }
 
     render = () => (
         <div className="grid-cotainer">
             <h2>{this.pageName}</h2>
-                {this.alertInfo}
-                <div className="grid-cols-2">
-                    <div className="grid-cols-1">
-                        {this.sliders}
-                    </div>
-                    <PoseTable pose={this.props.params.pose} />
-                </div>
+            {this.alertInfo}
+            <div className="grid-cols-2">
+                <div className="grid-cols-1">{this.sliders}</div>
+                <PoseTable pose={this.props.params.pose} />
+            </div>
             <ResetButton reset={this.reset} />
         </div>
     )

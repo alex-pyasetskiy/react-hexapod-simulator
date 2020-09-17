@@ -4,10 +4,10 @@ import getNewPlotParams from "./plotter"
 import { POSITION_NAMES_LIST } from "./constants"
 import { controllerCMD } from "./servo"
 
-export { 
-    VirtualHexapod, 
-    getNewPlotParams, 
-    solveInverseKinematics, 
+export {
+    VirtualHexapod,
+    getNewPlotParams,
+    solveInverseKinematics,
     POSITION_NAMES_LIST,
-    controllerCMD
+    controllerCMD,
 }

@@ -42,8 +42,8 @@ const NavBullets = () => (
         ))}
 
         {PATH_LINKS.map(link => (
-            <BulletPageLink 
-                key={NAV_BULLETS_PREFIX + link.path} 
+            <BulletPageLink
+                key={NAV_BULLETS_PREFIX + link.path}
                 link={link}
                 showDesc={true}
             />

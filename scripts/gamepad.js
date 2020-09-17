@@ -1,7 +1,11 @@
 const webSocketServer = require('websocket').server;
 const http = require('http');
 const dotenv = require('dotenv');
+<<<<<<< HEAD
 const HID = require('node-hid');
+=======
+const Joystick = require("joystick-logitech-f710");
+>>>>>>> a35f9ebd5d1a6743bf1735fd467eb01bdb0cdd27
 
 dotenv.config();
 
@@ -52,6 +56,12 @@ Joystick.create("/dev/input/by-id/usb-Logitech_Wireless_Gamepad_F710_89CA9F99-ev
   if (err) {
     throw err;
   }
+<<<<<<< HEAD
+=======
+
+  joystick.setMaximumAxesPosition(100);
+  console.log(`F710 Gamepad Connected! ${JSON.stringify(joystick)}`)
+>>>>>>> a35f9ebd5d1a6743bf1735fd467eb01bdb0cdd27
 
   joystick.on("button:a:press", function () {
     console.log("button:a:press");

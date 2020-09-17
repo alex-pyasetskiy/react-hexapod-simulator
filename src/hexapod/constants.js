@@ -71,7 +71,7 @@ const POSITION_NAME_TO_IS_LEFT_MAP = {
     rightBack: false,
     leftFront: true,
     leftMiddle: true,
-    leftBack: true
+    leftBack: true,
 }
 
 const NUMBER_OF_LEGS = 6
