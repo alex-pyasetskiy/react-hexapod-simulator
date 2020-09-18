@@ -32,14 +32,19 @@
         "source-map-explorer": "^2.4.2",
         "typescript": "^3.9.6",
         "websocket": "^1.0.31",
-        "prettier": "2.0.5"
+        "prettier": "2.0.5",
+        "@babel/cli": "^7.11.6",
+        "@babel/core": "^7.11.6",
+        "@babel/plugin-proposal-class-properties": "^7.10.4",
+        "@babel/preset-env": "^7.11.5",
+        "@babel/preset-es2015": "^7.0.0-beta.53"
     },
     "scripts": {
         "analyze": "source-map-explorer 'build/static/js/*.js'",
         "start": "PORT=4100 react-scripts start",
         "build": "react-scripts build",
         "eject": "react-scripts eject",
-        "startBoard": "node scripts/servoBoard.js"
+        "hoxapod": "node scripts/list-devices.js"
     },
     "eslintConfig": {
         "extends": "react-app"

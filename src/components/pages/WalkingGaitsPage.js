@@ -91,9 +91,7 @@ class WalkingGaitsPage extends Component {
         const step = Math.max(0, Math.min(stepCount - 1, tempStep))
         console.log(step)
         const pose = getPose(this.walkSequence, step)
-        let controller_cmd = `${animationCount} ${controllerCMD(pose).join(
-            ""
-        )}`
+        let controller_cmd = `${animationCount} ${controllerCMD(pose).join("")}`
         
         ws.send(JSON.stringify(controller_cmd))
         if (inWalkMode) {

@@ -10,11 +10,7 @@ import Vector from "../../Vector"
 import VirtualHexapod from "../../VirtualHexapod"
 import IKSolver from "./IKSolver"
 
-const solveInverseKinematics = (
-    dimensions,
-    rawIKparams,
-    flags = { rotateThenShift: true }
-) => {
+const solveInverseKinematics = (dimensions, rawIKparams, flags = { rotateThenShift: true }) => {
     const [ikSolver, target_groundContactPoints] = solveHexapodParams(
         dimensions,
         rawIKparams,

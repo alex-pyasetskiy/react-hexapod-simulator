@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { sliderList, Card, ResetButton, AlertBox } from "../generic"
+import { sliderList, ResetButton, AlertBox } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
 import { SECTION_NAMES, IK_SLIDERS_LABELS, BOARD_SOCKET } from "../vars"
 import { DEFAULT_IK_PARAMS } from "../../configs"

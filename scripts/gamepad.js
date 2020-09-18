@@ -1,53 +1,50 @@
-const webSocketServer = require('websocket').server;
-const http = require('http');
-const dotenv = require('dotenv');
-<<<<<<< HEAD
-const HID = require('node-hid');
-=======
-const Joystick = require("joystick-logitech-f710");
->>>>>>> a35f9ebd5d1a6743bf1735fd467eb01bdb0cdd27
+// const webSocketServer = require('websocket').server;
+// const http = require('http');
+// const dotenv = require('dotenv');
+// const HID = require('node-hid');
+// const Joystick = require("joystick-logitech-f710");
 
-dotenv.config();
+// dotenv.config();
 
-const server = http.createServer();
+// const server = http.createServer();
 
-server.listen(process.env.NODE_CONTROLLER_SOCKET, process.env.NODE_HOST, () => {
-  console.log(`Server running at http://${process.env.NODE_HOST}:${process.env.NODE_CONTROLLER_SOCKET}/`);
-});
+// server.listen(process.env.NODE_CONTROLLER_SOCKET, process.env.NODE_HOST, () => {
+//   console.log(`Server running at http://${process.env.NODE_HOST}:${process.env.NODE_CONTROLLER_SOCKET}/`);
+// });
 
-const wsServer = new webSocketServer({
-  httpServer: server
-});
+// const wsServer = new webSocketServer({
+//   httpServer: server
+// });
 
-var clients = {};
+// var clients = {};
 
-const getUniqueID = () => {
-  const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-  return `${s4() + s4()}-${s4()}`;
-};
+// const getUniqueID = () => {
+//   const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+//   return `${s4() + s4()}-${s4()}`;
+// };
 
-const sendMessage = (json) => {
-  Object.keys(clients).map((client) => {
-    clients[client].sendUTF(json);
-    return true
-  });
-}
+// const sendMessage = (json) => {
+//   Object.keys(clients).map((client) => {
+//     clients[client].sendUTF(json);
+//     return true
+//   });
+// }
 
-wsServer.on('request', function (request) {
-  var userID = getUniqueID();
-  console.log(`${new Date()} Recieved a new connection from origin ${request.origin}.`);
+// wsServer.on('request', function (request) {
+//   var userID = getUniqueID();
+//   console.log(`${new Date()} Recieved a new connection from origin ${request.origin}.`);
 
-  const connection = request.accept(null, request.origin);
-  clients[userID] = connection;
+//   const connection = request.accept(null, request.origin);
+//   clients[userID] = connection;
   
-  console.log(`connected: ${userID} in ${Object.getOwnPropertyNames(clients)}`)
+//   console.log(`connected: ${userID} in ${Object.getOwnPropertyNames(clients)}`)
 
-  connection.on('close', function (connection) {
-    console.log((new Date()) + " Peer " + userID + " disconnected.");
-    delete clients[userID];
-    console.log(`disconected: ${userID} in ${Object.getOwnPropertyNames(clients)}`)
-  });
-});
+//   connection.on('close', function (connection) {
+//     console.log((new Date()) + " Peer " + userID + " disconnected.");
+//     delete clients[userID];
+//     console.log(`disconected: ${userID} in ${Object.getOwnPropertyNames(clients)}`)
+//   });
+// });
 
 
 var Joystick = require("../lib/joystic");
@@ -56,12 +53,9 @@ Joystick.create("/dev/input/by-id/usb-Logitech_Wireless_Gamepad_F710_89CA9F99-ev
   if (err) {
     throw err;
   }
-<<<<<<< HEAD
-=======
 
   joystick.setMaximumAxesPosition(100);
   console.log(`F710 Gamepad Connected! ${JSON.stringify(joystick)}`)
->>>>>>> a35f9ebd5d1a6743bf1735fd467eb01bdb0cdd27
 
   joystick.on("button:a:press", function () {
     console.log("button:a:press");
