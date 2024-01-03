@@ -12,7 +12,7 @@
         "dotenv": "^8.2.0",
         "express": "^4.15.2",
         "jest-canvas-mock": "^2.2.0",
-        "plotly.js": "^1.54.6",
+        "plotly.js": "^2.25.2",
         "plotly.js-gl3d-dist-min": "^1.54.2",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
